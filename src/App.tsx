@@ -1,4 +1,7 @@
-import {NavigationContainer} from '@react-navigation/native';
+import {
+  NavigationContainer,
+  useNavigationContainerRef,
+} from '@react-navigation/native';
 import React, {useEffect} from 'react';
 import {AppState, AppStateStatus, Platform} from 'react-native';
 import {useDeviceContext} from 'twrnc';
@@ -11,8 +14,16 @@ import {
   focusManager,
 } from '@tanstack/react-query';
 import NetInfo from '@react-native-community/netinfo';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import {useFlipper} from '@react-navigation/devtools';
 
 const queryClient = new QueryClient();
+
+if (__DEV__) {
+  void import('react-query-native-devtools').then(({addPlugin}) => {
+    addPlugin({queryClient});
+  });
+}
 
 onlineManager.setEventListener(setOnline => {
   return NetInfo.addEventListener(state => {
@@ -26,8 +37,18 @@ function onAppStateChange(status: AppStateStatus) {
   }
 }
 
+const config = {};
+
+const linking = {
+  prefixes: ['rattus://'],
+  config,
+};
+
 export default function App() {
+  const navigationRef = useNavigationContainerRef();
+
   useDeviceContext(tw);
+  useFlipper(navigationRef);
 
   useEffect(() => {
     const subscription = AppState.addEventListener('change', onAppStateChange);
@@ -35,10 +56,12 @@ export default function App() {
     return () => subscription.remove();
   }, []);
   return (
-    <QueryClientProvider client={queryClient}>
-      <NavigationContainer>
-        <Navigator />
-      </NavigationContainer>
-    </QueryClientProvider>
+    <GestureHandlerRootView style={tw`flex-1`}>
+      <QueryClientProvider client={queryClient}>
+        <NavigationContainer linking={linking} ref={navigationRef}>
+          <Navigator />
+        </NavigationContainer>
+      </QueryClientProvider>
+    </GestureHandlerRootView>
   );
 }

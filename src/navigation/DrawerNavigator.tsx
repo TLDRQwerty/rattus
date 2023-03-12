@@ -1,0 +1,115 @@
+import React from 'react';
+import {View, Text, Image} from 'react-native';
+import {
+  createDrawerNavigator,
+  DrawerContentComponentProps,
+  DrawerScreenProps,
+} from '@react-navigation/drawer';
+import PublicTimeline from '../screens/PublicTimeline';
+import Status from '../screens/Status';
+import {CompositeScreenProps} from '@react-navigation/native';
+import {RootStackParamList} from '.';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {useUserStore} from '../stores/use-user';
+import {Account} from '../types';
+import {useQuery} from '@tanstack/react-query';
+import tw from '../tailwind';
+import ProfileNavigator, {
+  ProfileScreenParams,
+  ProfileStackParamList,
+} from './ProfileNavigatior';
+import LocalTimeline from '../screens/LocalTimeline';
+import ExploreTimeline from '../screens/ExploreTimeline';
+import Pressable from '../ui/Pressable';
+import Notifications from '../screens/Notifications';
+
+const Drawer = createDrawerNavigator<DrawerNavParamList>();
+
+export default function DrawerNavigator() {
+  const renderDrawerContent = (props: DrawerContentComponentProps) => {
+    return <CustomDrawerContent {...props} />;
+  };
+  return (
+    <Drawer.Navigator drawerContent={renderDrawerContent}>
+      <Drawer.Screen name="PublicTimeline" component={PublicTimeline} />
+      <Drawer.Screen name="LocalTimeline" component={LocalTimeline} />
+      <Drawer.Screen name="ExploreTimeline" component={ExploreTimeline} />
+      <Drawer.Screen name="Notifications" component={Notifications} />
+      <Drawer.Screen name="Status" component={Status} />
+      <Drawer.Screen name="Profile" component={ProfileNavigator} />
+    </Drawer.Navigator>
+  );
+}
+
+function CustomDrawerContent({navigation}: DrawerContentComponentProps) {
+  const [instance, code, accessToken] = useUserStore(s => [
+    s.instance,
+    s.code,
+    s.accessToken,
+  ]);
+
+  const {data} = useQuery<Account>(
+    ['/api/v1/accounts/verify_credentials', accessToken, instance],
+    async () => {
+      if (accessToken == null || instance == null) {
+        throw Error();
+      }
+      const response = await fetch(
+        `https://${instance}/api/v1/accounts/verify_credentials`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+      if (!response.ok) {
+        throw Error();
+      }
+      return response.json();
+    },
+  );
+  return (
+    <View>
+      <Text style={tw`font-bold text-lg`}>Rattus</Text>
+      <Text>{instance}</Text>
+      <Text>{code}</Text>
+      <Pressable onPress={() => navigation.getParent()?.navigate('Instance')}>
+        <Text>Connect to instance</Text>
+      </Pressable>
+      <Pressable onPress={() => navigation.navigate('LocalTimeline')}>
+        <Text>Local</Text>
+      </Pressable>
+      <Pressable onPress={() => navigation.navigate('ExploreTimeline')}>
+        <Text>Explore</Text>
+      </Pressable>
+      <Pressable onPress={() => navigation.navigate('Notifications')}>
+        <Text>Notifications</Text>
+      </Pressable>
+      {data && (
+        <Pressable
+          onPress={() => navigation.navigate('Profile', {id: data.id})}
+          style={tw`flex-row items-center`}>
+          <Image source={{uri: data?.avatar}} style={tw`w-8 h-8 rounded-lg`} />
+          <Text numberOfLines={1} ellipsizeMode="tail">
+            {data.username}
+          </Text>
+        </Pressable>
+      )}
+    </View>
+  );
+}
+
+export type DrawerNavParamList = {
+  PublicTimeline: undefined;
+  LocalTimeline: undefined;
+  ExploreTimeline: undefined;
+  Notifications: undefined;
+  Status: {id: string};
+  Profile: ProfileScreenParams<keyof ProfileStackParamList> & {id: string};
+};
+
+export type RootDrawerScreenProps<Screen extends keyof DrawerNavParamList> =
+  CompositeScreenProps<
+    DrawerScreenProps<DrawerNavParamList, Screen>,
+    NativeStackScreenProps<RootStackParamList, 'Root'>
+  >;
