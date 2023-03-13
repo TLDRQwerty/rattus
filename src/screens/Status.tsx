@@ -63,7 +63,7 @@ export default function Context({route}: RootDrawerScreenProps<'Status'>) {
       getItemCount={(d: StatusType[]) => d.length}
       getItem={(d: StatusType[], i) => d[i]}
       renderItem={item => <StatusComponent {...item.item} />}
-      ItemSeparatorComponent={Spacer}
+      contentContainerStyle={tw`gap-4`}
       onEndReached={
         fetchNextPage != null && !isFetching ? () => fetchNextPage() : undefined
       }
@@ -78,8 +78,4 @@ export default function Context({route}: RootDrawerScreenProps<'Status'>) {
       onEndReachedThreshold={0.3}
     />
   );
-}
-
-function Spacer() {
-  return <View style={tw`border-gray-900 border-t`} />;
 }

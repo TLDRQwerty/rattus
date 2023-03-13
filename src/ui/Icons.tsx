@@ -11,11 +11,12 @@ const getDefaultParamsFromStyle = (style?: TextStyle) => {
   const width = style?.width ?? 24;
   const height = style?.height ?? 24;
   const stroke = style?.color ?? '#000000';
-  return {stroke, width, height};
+  const fill = style?.backgroundColor ?? 'none';
+  return {stroke, width, height, fill};
 };
 
 export function MessageCircle({strokeWidth = 1.5, style}: Props) {
-  const {width, height, stroke} = getDefaultParamsFromStyle(style);
+  const {width, height, stroke, fill} = getDefaultParamsFromStyle(style);
   return (
     <Svg
       style={style}
@@ -24,7 +25,7 @@ export function MessageCircle({strokeWidth = 1.5, style}: Props) {
       viewBox="0 0 24 24"
       stroke-width={strokeWidth}
       stroke={stroke}
-      fill="none"
+      fill={fill}
       stroke-linecap="round"
       stroke-linejoin="round">
       <Path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -37,16 +38,15 @@ export function MessageCircle({strokeWidth = 1.5, style}: Props) {
 }
 
 export function Heart({style, strokeWidth = 1.5}: Props) {
-  const {width, height, stroke} = getDefaultParamsFromStyle(style);
+  const {width, height, stroke, fill} = getDefaultParamsFromStyle(style);
   return (
     <Svg
-      style={style}
       width={width}
       height={height}
       viewBox="0 0 24 24"
       stroke-width={strokeWidth}
       stroke={stroke}
-      fill="none"
+      fill={fill}
       stroke-linecap="round"
       stroke-linejoin="round">
       <Path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -56,7 +56,7 @@ export function Heart({style, strokeWidth = 1.5}: Props) {
 }
 
 export function Repeat({strokeWidth = 1.5, style}: Props) {
-  const {width, height, stroke} = getDefaultParamsFromStyle(style);
+  const {width, height, stroke, fill} = getDefaultParamsFromStyle(style);
   return (
     <Svg
       style={style}
@@ -65,7 +65,7 @@ export function Repeat({strokeWidth = 1.5, style}: Props) {
       viewBox="0 0 24 24"
       stroke-width={strokeWidth}
       stroke={stroke}
-      fill="none"
+      fill={fill}
       stroke-linecap="round"
       stroke-linejoin="round">
       <Path stroke="none" d="M0 0h24v24H0z" fill="none" />

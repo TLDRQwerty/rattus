@@ -22,11 +22,18 @@ export default function Status({
   favourites_count,
   account,
   media_attachments,
+  favourited,
 }: Props) {
   const {width} = useWindowDimensions();
   return (
     <View style={tw`px-2`}>
-      <View style={tw`flex-row flex-1 gap-4`}>
+      <View style={tw`flex-row flex-1 gap-2 items-center`}>
+        <View>
+          <Image
+            source={{uri: account.avatar_static}}
+            style={tw`w-8 h-8 rounded-full`}
+          />
+        </View>
         <Text>{account.username}</Text>
         <Text>{account.acct}</Text>
       </View>
@@ -53,7 +60,9 @@ export default function Status({
           <Text>{reblogs_count}</Text>
         </View>
         <View style={tw`flex-row items-center`}>
-          <Heart />
+          <Heart
+            style={tw.style(favourited && 'bg-violet-200 text-violet-600')}
+          />
           <Text>{favourites_count}</Text>
         </View>
       </View>
