@@ -9,7 +9,7 @@ import {
   VirtualizedList,
 } from 'react-native';
 import useInfiniteQuery from '../../hooks/use-infinite-query';
-import {ProfileScreenParams} from '../../navigation/ProfileNavigatior';
+import {ProfileScreenParams} from '../../navigation/ProfileNavigator';
 import tw from '../../tailwind';
 import {Account as AccountType} from '../../types';
 import Pressable from '../../ui/Pressable';
@@ -65,7 +65,7 @@ function Account({avatar, username, url, id}: AccountType) {
       style={tw`flex-row gap-2`}
       onPress={() =>
         navigation.dispatch(
-          CommonActions.navigate({name: 'Profile', params: {id}}),
+          CommonActions.navigate({name: 'ProfileOverview', params: {id}}),
         )
       }>
       <Image source={{uri: avatar}} style={tw`rounded-lg w-8`} />

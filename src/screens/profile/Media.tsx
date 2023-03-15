@@ -17,8 +17,8 @@ export default function Posts({route}: ProfilePostsScreenParams<'Posts'>) {
     refetch,
     isRefetching,
   } = useInfiniteQuery<StatusType>(
-    ['api/v1/accounts/statuses', id],
-    `api/v1/accounts/${id}/statuses`,
+    ['api/v1/accounts/statuses?only_media=true&exclude_replies=false', id],
+    `api/v1/accounts/${id}/statuses?only_media=true&exclude_replies=false`,
   );
   if (data == null || isError) {
     return null;

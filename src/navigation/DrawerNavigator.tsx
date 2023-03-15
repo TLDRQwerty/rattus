@@ -7,7 +7,10 @@ import {
 } from '@react-navigation/drawer';
 import PublicTimeline from '../screens/PublicTimeline';
 import Status from '../screens/Status';
-import {CompositeScreenProps} from '@react-navigation/native';
+import {
+  CompositeScreenProps,
+  NavigatorScreenParams,
+} from '@react-navigation/native';
 import {RootStackParamList} from '.';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {useUserStore} from '../stores/use-user';
@@ -17,7 +20,7 @@ import tw from '../tailwind';
 import ProfileNavigator, {
   ProfileScreenParams,
   ProfileStackParamList,
-} from './ProfileNavigatior';
+} from './ProfileNavigator';
 import LocalTimeline from '../screens/LocalTimeline';
 import ExploreTimeline from '../screens/ExploreTimeline';
 import Pressable from '../ui/Pressable';
@@ -36,7 +39,7 @@ export default function DrawerNavigator() {
       <Drawer.Screen name="ExploreTimeline" component={ExploreTimeline} />
       <Drawer.Screen name="Notifications" component={Notifications} />
       <Drawer.Screen name="Status" component={Status} />
-      <Drawer.Screen name="Profile" component={ProfileNavigator} />
+      <Drawer.Screen name="ProfileOverview" component={ProfileNavigator} />
     </Drawer.Navigator>
   );
 }
@@ -73,21 +76,35 @@ function CustomDrawerContent({navigation}: DrawerContentComponentProps) {
       <Text style={tw`font-bold text-lg`}>Rattus</Text>
       <Text>{instance}</Text>
       <Text>{code}</Text>
-      <Pressable onPress={() => navigation.getParent()?.navigate('Instance')}>
+      <Pressable
+        style={tw`justify-center items-center h-12 bg-gray-200`}
+        onPress={() => navigation.getParent()?.navigate('Instance')}>
         <Text>Connect to instance</Text>
       </Pressable>
-      <Pressable onPress={() => navigation.navigate('LocalTimeline')}>
+      <Pressable
+        style={tw`justify-center items-center h-12 bg-gray-200`}
+        onPress={() => navigation.navigate('LocalTimeline')}>
         <Text>Local</Text>
       </Pressable>
-      <Pressable onPress={() => navigation.navigate('ExploreTimeline')}>
+      <Pressable
+        style={tw`justify-center items-center h-12 bg-gray-200`}
+        onPress={() => navigation.navigate('ExploreTimeline')}>
         <Text>Explore</Text>
       </Pressable>
-      <Pressable onPress={() => navigation.navigate('Notifications')}>
+      <Pressable
+        style={tw`justify-center items-center h-12 bg-gray-200`}
+        onPress={() => navigation.navigate('Notifications')}>
         <Text>Notifications</Text>
       </Pressable>
       {data && (
         <Pressable
-          onPress={() => navigation.navigate('Profile', {id: data.id})}
+          onPress={() =>
+            navigation.navigate('ProfileOverview', {
+              id: data.id,
+              screen: 'PostsStack',
+              params: {id: data.id, screen: 'Posts', params: {id: data.id}},
+            })
+          }
           style={tw`flex-row items-center`}>
           <Image source={{uri: data?.avatar}} style={tw`w-8 h-8 rounded-lg`} />
           <Text numberOfLines={1} ellipsizeMode="tail">
@@ -105,7 +122,7 @@ export type DrawerNavParamList = {
   ExploreTimeline: undefined;
   Notifications: undefined;
   Status: {id: string};
-  Profile: ProfileScreenParams<keyof ProfileStackParamList> & {id: string};
+  ProfileOverview: NavigatorScreenParams<ProfileStackParamList> & {id: string};
 };
 
 export type RootDrawerScreenProps<Screen extends keyof DrawerNavParamList> =

@@ -26,7 +26,7 @@ export default function Status({
 }: Props) {
   const {width} = useWindowDimensions();
   return (
-    <View style={tw`px-2`}>
+    <View style={tw`px-2 py-4`}>
       <View style={tw`flex-row flex-1 gap-2 items-center`}>
         <View>
           <Image
@@ -40,7 +40,7 @@ export default function Status({
       <RenderHTML contentWidth={width} source={{html: content}} />
       {media_attachments?.length !== 0
         ? media_attachments?.map(attachment => (
-            <View>
+            <View key={attachment.id}>
               <Text>{attachment.description}</Text>
               <Image
                 style={tw`w-full h-48`}

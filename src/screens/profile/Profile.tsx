@@ -1,15 +1,22 @@
 import {CommonActions, useNavigation} from '@react-navigation/native';
-import React, {useState} from 'react';
-import {ActivityIndicator, View, Image, Text} from 'react-native';
+import React from 'react';
+import {
+  ActivityIndicator,
+  View,
+  Image,
+  Text,
+  useWindowDimensions,
+} from 'react-native';
 import RenderHTML from 'react-native-render-html';
 import useAuthQuery from '../../hooks/use-auth-query';
+import {ProfileScreenParams} from '../../navigation/ProfileNavigatior';
 import tw from '../../tailwind';
 import {Account} from '../../types';
 import Pressable from '../../ui/Pressable';
 
 export default function Profile({id}: {id: string}) {
   const navigation = useNavigation();
-  const [width, setWidth] = useState(0);
+  const {width} = useWindowDimensions();
   const {data, isLoading, isError} = useAuthQuery<Account>(
     ['api/v1/accounts', id],
     `api/v1/accounts/${id}`,
@@ -34,15 +41,25 @@ export default function Profile({id}: {id: string}) {
         </View>
       </View>
 
+      <View style={tw`mt-2`}>
+        <Text style={tw`text-primary-600 font-bold text-lg`}>
+          {data.display_name !== '' ? data.display_name : data.username}
+        </Text>
+        <Text style={tw`text-gray-400`}>{data.acct}</Text>
+      </View>
+
       <View>
-        <Text>{data.username}</Text>
-        <Text>{data.acct}</Text>
+        <RenderHTML
+          source={{html: data.note}}
+          contentWidth={width}
+          enableExperimentalMarginCollapsing={true}
+        />
       </View>
 
       {data.fields.length !== 0 ? (
-        <View onLayout={event => setWidth(event.nativeEvent.layout.width)}>
+        <View>
           {data.fields.map(field => (
-            <View style={tw`flex-row gap-4`}>
+            <View key={field.name} style={tw`flex-row gap-4`}>
               <Text style={tw`capitalize`}>{field.name}</Text>
               <RenderHTML contentWidth={width} source={{html: field.value}} />
             </View>
