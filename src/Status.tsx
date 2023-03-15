@@ -1,3 +1,4 @@
+import {useNavigation} from '@react-navigation/native';
 import React, {useState} from 'react';
 import {
   View,
@@ -7,6 +8,7 @@ import {
   Image,
   StyleSheet,
   useWindowDimensions,
+  Pressable,
 } from 'react-native';
 import RenderHTML from 'react-native-render-html';
 import tw from './tailwind';
@@ -24,10 +26,28 @@ export default function Status({
   media_attachments,
   favourited,
 }: Props) {
+  const navigation = useNavigation();
   const {width} = useWindowDimensions();
   return (
     <View style={tw`px-2 py-4`}>
-      <View style={tw`flex-row flex-1 gap-2 items-center`}>
+      <Pressable
+        style={tw`flex-row flex-1 gap-2 items-center`}
+        onPress={() =>
+          navigation.navigate('Root', {
+            screen: 'ProfileOverview',
+            params: {
+              screen: 'PostsStack',
+              id: account.id,
+              params: {
+                id: account.id,
+                screen: 'Posts',
+                params: {
+                  id: account.id,
+                },
+              },
+            },
+          })
+        }>
         <View>
           <Image
             source={{uri: account.avatar_static}}
@@ -36,7 +56,7 @@ export default function Status({
         </View>
         <Text>{account.username}</Text>
         <Text>{account.acct}</Text>
-      </View>
+      </Pressable>
       <RenderHTML contentWidth={width} source={{html: content}} />
       {media_attachments?.length !== 0
         ? media_attachments?.map(attachment => (

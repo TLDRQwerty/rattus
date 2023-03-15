@@ -64,9 +64,20 @@ function Account({avatar, username, url, id}: AccountType) {
     <Pressable
       style={tw`flex-row gap-2`}
       onPress={() =>
-        navigation.dispatch(
-          CommonActions.navigate({name: 'ProfileOverview', params: {id}}),
-        )
+        navigation.navigate('Root', {
+          screen: 'ProfileOverview',
+          params: {
+            id,
+            screen: 'PostsStack',
+            params: {
+              id,
+              screen: 'Posts',
+              params: {
+                id,
+              },
+            },
+          },
+        })
       }>
       <Image source={{uri: avatar}} style={tw`rounded-lg w-8`} />
       <View>
