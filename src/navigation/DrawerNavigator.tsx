@@ -72,10 +72,9 @@ function CustomDrawerContent({navigation}: DrawerContentComponentProps) {
     },
   );
   return (
-    <View>
-      <Text style={tw`font-bold text-lg`}>Rattus</Text>
-      <Text>{instance}</Text>
-      <Text>{code}</Text>
+    <View style={tw`flex-1`}>
+      <Text style={tw`font-bold text-xl`}>Rattus</Text>
+      <Text>A Mastodon client</Text>
       <Pressable
         style={tw`justify-center items-center h-12 bg-gray-200`}
         onPress={() => navigation.getParent()?.navigate('Instance')}>
@@ -97,20 +96,27 @@ function CustomDrawerContent({navigation}: DrawerContentComponentProps) {
         <Text>Notifications</Text>
       </Pressable>
       {data && (
-        <Pressable
-          onPress={() =>
-            navigation.navigate('ProfileOverview', {
-              id: data.id,
-              screen: 'PostsStack',
-              params: {id: data.id, screen: 'Posts', params: {id: data.id}},
-            })
-          }
-          style={tw`flex-row items-center`}>
-          <Image source={{uri: data?.avatar}} style={tw`w-8 h-8 rounded-lg`} />
-          <Text numberOfLines={1} ellipsizeMode="tail">
-            {data.username}
-          </Text>
-        </Pressable>
+        <>
+          <View style={tw`flex-1`} />
+          <Pressable
+            onPress={() =>
+              navigation.navigate('ProfileOverview', {
+                id: data.id,
+                screen: 'PostsStack',
+                params: {id: data.id, screen: 'Posts', params: {id: data.id}},
+              })
+            }
+            style={tw`flex-row items-center pb-2 pl-2`}>
+            <Image
+              source={{uri: data?.avatar}}
+              style={tw`w-8 h-8 rounded-lg`}
+            />
+            <Text numberOfLines={1} ellipsizeMode="tail">
+              <Text style={tw`text-primary-600`}>@{data.username}</Text>
+              <Text>@{instance}</Text>
+            </Text>
+          </Pressable>
+        </>
       )}
     </View>
   );

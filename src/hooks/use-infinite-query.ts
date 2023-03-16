@@ -107,7 +107,7 @@ export default function useInfiniteQuery<
       }
 
       return {
-        data: await response.json(),
+        data: (await response.json()) as TData[],
         nextPage,
         prevPage,
       };

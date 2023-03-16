@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, Pressable} from 'react-native';
+import {View, Text} from 'react-native';
 import {CompositeScreenProps} from '@react-navigation/native';
 import {
   createNativeStackNavigator,
@@ -10,6 +10,7 @@ import Posts from '../screens/profile/Posts';
 import PostsAndReplies from '../screens/profile/PostsAndReplies';
 import Media from '../screens/profile/Media';
 import tw from '../tailwind';
+import Pressable from '../ui/Pressable';
 
 const Stack = createNativeStackNavigator<ProfilePostsStackParamList>();
 

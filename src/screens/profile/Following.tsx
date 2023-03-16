@@ -9,6 +9,7 @@ import {
   VirtualizedList,
 } from 'react-native';
 import useInfiniteQuery from '../../hooks/use-infinite-query';
+import useVirtualizedList from '../../hooks/use-virtualized-list';
 import {ProfileScreenParams} from '../../navigation/ProfileNavigator';
 import tw from '../../tailwind';
 import {Account as AccountType} from '../../types';
@@ -16,46 +17,11 @@ import Pressable from '../../ui/Pressable';
 
 export default function Following({route}: ProfileScreenParams<'Following'>) {
   const {id} = route.params;
-  const {
-    data,
-    isLoading,
-    isError,
-    fetchNextPage,
-    isFetching,
-    refetch,
-    isRefetching,
-  } = useInfiniteQuery<AccountType[]>(
-    ['api/v1/accounts/following', id],
-    `api/v1/accounts/${id}/following`,
-  );
-  if (data == null || isError) {
-    return null;
-  }
-  if (isLoading) {
-    return <ActivityIndicator />;
-  }
-  const flatData = data.pages.map(page => page.data).flat();
-  return (
-    <VirtualizedList<AccountType>
-      data={flatData}
-      getItemCount={(d: AccountType[]) => d.length}
-      getItem={(d: AccountType[], i) => d[i]}
-      renderItem={item => <Account {...item.item} />}
-      contentContainerStyle={tw`gap-2`}
-      onEndReached={
-        fetchNextPage != null && !isFetching ? () => fetchNextPage() : undefined
-      }
-      refreshControl={
-        <RefreshControl
-          refreshing={isRefetching}
-          onRefresh={() => {
-            void refetch();
-          }}
-        />
-      }
-      onEndReachedThreshold={0.3}
-    />
-  );
+  const {Component} = useVirtualizedList<AccountType>({
+    endpoint: `api/v1/accounts/${id}/following`,
+    renderItem: item => <Account {...item.item} />,
+  });
+  return Component;
 }
 
 function Account({avatar, username, url, id}: AccountType) {

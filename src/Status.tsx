@@ -1,15 +1,6 @@
 import {useNavigation} from '@react-navigation/native';
-import React, {useState} from 'react';
-import {
-  View,
-  Text,
-  StyleProp,
-  ViewStyle,
-  Image,
-  StyleSheet,
-  useWindowDimensions,
-  Pressable,
-} from 'react-native';
+import React from 'react';
+import {View, Text, Image, useWindowDimensions, Pressable} from 'react-native';
 import RenderHTML from 'react-native-render-html';
 import tw from './tailwind';
 import {Status as StatusType} from './types';
@@ -18,6 +9,7 @@ import {Heart, MessageCircle, Repeat} from './ui/Icons';
 interface Props extends StatusType {}
 
 export default function Status({
+  id,
   content,
   reblogs_count,
   replies_count,
@@ -29,9 +21,18 @@ export default function Status({
   const navigation = useNavigation();
   const {width} = useWindowDimensions();
   return (
-    <View style={tw`px-2 py-4`}>
+    <Pressable
+      style={tw`px-2 py-4`}
+      onPress={() =>
+        navigation.navigate('Root', {
+          screen: 'Status',
+          params: {
+            id,
+          },
+        })
+      }>
       <Pressable
-        style={tw`flex-row flex-1 gap-2 items-center`}
+        style={tw`flex-row flex-1 gap-2 items-center h-8`}
         onPress={() =>
           navigation.navigate('Root', {
             screen: 'ProfileOverview',
@@ -48,14 +49,12 @@ export default function Status({
             },
           })
         }>
-        <View>
-          <Image
-            source={{uri: account.avatar_static}}
-            style={tw`w-8 h-8 rounded-full`}
-          />
-        </View>
-        <Text>{account.username}</Text>
-        <Text>{account.acct}</Text>
+        <Image
+          source={{uri: account.avatar_static}}
+          style={tw`w-8 h-8 rounded-full`}
+        />
+        <Text style={tw`h-6`}>{account.username}</Text>
+        <Text style={tw`h-6`}>{account.acct}</Text>
       </Pressable>
       <RenderHTML contentWidth={width} source={{html: content}} />
       {media_attachments?.length !== 0
@@ -86,6 +85,6 @@ export default function Status({
           <Text>{favourites_count}</Text>
         </View>
       </View>
-    </View>
+    </Pressable>
   );
 }

@@ -1,32 +1,10 @@
 import React from 'react';
-import useInfiniteQuery from '../hooks/use-infinite-query';
-import {
-  ActivityIndicator,
-  ListRenderItem,
-  RefreshControl,
-  VirtualizedList,
-  Text,
-  View,
-} from 'react-native';
-import tw from '../tailwind';
+import {ListRenderItem, Text, View} from 'react-native';
 import {Notification} from '../types';
 import Status from '../Status';
+import useVirtualizedList from '../hooks/use-virtualized-list';
 
 export default function Notifications() {
-  const {
-    data,
-    isLoading,
-    isError,
-    error,
-    fetchNextPage,
-    isFetching,
-    refetch,
-    isRefetching,
-  } = useInfiniteQuery<Notification[]>(
-    ['api/v1/notifications'],
-    'api/v1/notifications',
-  );
-
   const renderItem: ListRenderItem<Notification> = ({item}) => {
     return (
       <View>
@@ -36,33 +14,10 @@ export default function Notifications() {
     );
   };
 
-  if (data == null || isError) {
-    return null;
-  }
-  if (isLoading) {
-    return <ActivityIndicator />;
-  }
-  const flatData = data.pages.map(page => page.data).flat();
+  const {Component} = useVirtualizedList<Notification>({
+    endpoint: 'api/v1/notifications',
+    renderItem: renderItem,
+  });
 
-  return (
-    <VirtualizedList<Notification>
-      data={flatData}
-      getItemCount={(d: Notification[]) => d.length}
-      getItem={(d: Notification[], i) => d[i]}
-      renderItem={renderItem}
-      contentContainerStyle={tw`gap-2`}
-      onEndReached={
-        fetchNextPage != null && !isFetching ? () => fetchNextPage() : undefined
-      }
-      refreshControl={
-        <RefreshControl
-          refreshing={isRefetching}
-          onRefresh={() => {
-            void refetch();
-          }}
-        />
-      }
-      onEndReachedThreshold={0.3}
-    />
-  );
+  return Component;
 }
