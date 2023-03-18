@@ -6,7 +6,9 @@ import Status from '../../Status';
 import tw from '../../tailwind';
 import {Status as StatusType} from '../../types';
 
-export default function Posts({route}: ProfilePostsScreenParams<'PostsAndReplies'>) {
+export default function Posts({
+  route,
+}: ProfilePostsScreenParams<'PostsAndReplies'>) {
   const {id} = route.params;
   const {
     data,

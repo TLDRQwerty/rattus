@@ -13,7 +13,7 @@ import tw from '../tailwind';
 import {Status as StatusType, Context as ContextType} from '../types';
 import StatusComponent from '../Status';
 import useInfiniteQuery from '../hooks/use-infinite-query';
-import useVirtualizedList from '../hooks/use-virtualized-list';
+import useList from '../hooks/use-list';
 
 function Status({id}: {id: string}) {
   const {data, isLoading, isError} = useAuthQuery<StatusType>(
@@ -43,7 +43,10 @@ export default function Context({route}: RootDrawerScreenProps<'Status'>) {
     isFetching,
     refetch,
     isRefetching,
-  } = useInfiniteQuery<ContextType>(['api/v1/statuses/context', id], ``);
+  } = useInfiniteQuery<ContextType>(
+    ['api/v1/statuses/context', id],
+    `api/v1/statuses/${id}/context`,
+  );
 
   const renderListHeaderComponent = () => {
     return <Status id={id} />;
@@ -60,7 +63,7 @@ export default function Context({route}: RootDrawerScreenProps<'Status'>) {
       data={data.pages.map(page => page.data.descendants).flat()}
       getItemCount={(d: StatusType[]) => d.length}
       getItem={(d: StatusType[], i) => d[i]}
-      renderItem={undefined}
+      renderItem={item => <Status {...item.item} />}
       contentContainerStyle={tw`gap-4`}
       onEndReached={
         fetchNextPage != null && !isFetching ? () => fetchNextPage() : undefined

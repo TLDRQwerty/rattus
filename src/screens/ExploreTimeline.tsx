@@ -14,7 +14,7 @@ import Status from '../Status';
 import {RootDrawerScreenProps} from '../navigation/DrawerNavigator';
 import useInfiniteQuery from '../hooks/use-infinite-query';
 
-export default function PublicTimeline({}: RootDrawerScreenProps<'PublicTimeline'>) {
+export default function PublicTimeline({}: RootDrawerScreenProps<'ExploreTimeline'>) {
   const {
     data,
     isLoading,

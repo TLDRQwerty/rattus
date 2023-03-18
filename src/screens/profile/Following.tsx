@@ -9,7 +9,7 @@ import {
   VirtualizedList,
 } from 'react-native';
 import useInfiniteQuery from '../../hooks/use-infinite-query';
-import useVirtualizedList from '../../hooks/use-virtualized-list';
+import useList from '../../hooks/use-list';
 import {ProfileScreenParams} from '../../navigation/ProfileNavigator';
 import tw from '../../tailwind';
 import {Account as AccountType} from '../../types';
@@ -17,7 +17,7 @@ import Pressable from '../../ui/Pressable';
 
 export default function Following({route}: ProfileScreenParams<'Following'>) {
   const {id} = route.params;
-  const {Component} = useVirtualizedList<AccountType>({
+  const {Component} = useList<AccountType>({
     endpoint: `api/v1/accounts/${id}/following`,
     renderItem: item => <Account {...item.item} />,
   });

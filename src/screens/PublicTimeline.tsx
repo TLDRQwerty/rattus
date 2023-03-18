@@ -4,10 +4,10 @@ import {Status as StatusType} from '../types';
 import {useNavigation} from '@react-navigation/native';
 import Status from '../Status';
 import {RootDrawerScreenProps} from '../navigation/DrawerNavigator';
-import useVirtualizedList from '../hooks/use-virtualized-list';
+import useList from '../hooks/use-list';
 
 export default function PublicTimeline({}: RootDrawerScreenProps<'PublicTimeline'>) {
-  const {Component} = useVirtualizedList<StatusType>({
+  const {Component} = useList<StatusType>({
     endpoint: 'api/v1/timelines/public',
     renderItem: item => <StatusComponent {...item.item} />,
   });

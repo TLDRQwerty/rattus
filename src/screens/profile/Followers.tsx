@@ -1,7 +1,7 @@
 import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {Image, Text, View} from 'react-native';
-import useVirtualizedList from '../../hooks/use-virtualized-list';
+import useList from '../../hooks/use-list';
 import {ProfileScreenParams} from '../../navigation/ProfileNavigator';
 import tw from '../../tailwind';
 import {Account as AccountType} from '../../types';
@@ -9,7 +9,7 @@ import Pressable from '../../ui/Pressable';
 
 export default function Followers({route}: ProfileScreenParams<'Followers'>) {
   const {id} = route.params;
-  const {Component} = useVirtualizedList<AccountType>({
+  const {Component} = useList<AccountType>({
     endpoint: `api/v1/accounts/${id}/followers`,
     renderItem: item => <Account {...item.item} />,
   });

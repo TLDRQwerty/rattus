@@ -32,7 +32,7 @@ export default function Status({
         })
       }>
       <Pressable
-        style={tw`flex-row flex-1 gap-2 items-center h-8`}
+        style={tw`flex-row flex-1 gap-2 items-center min-h-8`}
         onPress={() =>
           navigation.navigate('Root', {
             screen: 'ProfileOverview',
@@ -51,10 +51,12 @@ export default function Status({
         }>
         <Image
           source={{uri: account.avatar_static}}
-          style={tw`w-8 h-8 rounded-full`}
+          style={tw`w-8 h-8 rounded-lg`}
         />
-        <Text style={tw`h-6`}>{account.username}</Text>
-        <Text style={tw`h-6`}>{account.acct}</Text>
+        <View>
+          <Text>{account.username}</Text>
+          <Text>{account.acct}</Text>
+        </View>
       </Pressable>
       <RenderHTML contentWidth={width} source={{html: content}} />
       {media_attachments?.length !== 0
@@ -62,7 +64,7 @@ export default function Status({
             <View key={attachment.id}>
               <Text>{attachment.description}</Text>
               <Image
-                style={tw`w-full h-48`}
+                style={tw`w-full h-42`}
                 resizeMode="contain"
                 source={{uri: attachment.preview_url}}
               />

@@ -20,7 +20,7 @@ export default function ProfilePostsNavigator({
 }: ProfileScreenParams<'PostsStack'>) {
   const {id} = route.params;
   return (
-    <View style={tw`px-2 flex-1`}>
+    <View style={tw`flex-1`}>
       <View style={tw`flex-row justify-between`}>
         <Pressable
           onPress={() =>
