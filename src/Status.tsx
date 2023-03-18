@@ -3,7 +3,7 @@ import React from 'react';
 import {View, Text, Image, useWindowDimensions, Pressable} from 'react-native';
 import RenderHTML from 'react-native-render-html';
 import tw from './tailwind';
-import {Status as StatusType} from './types';
+import {Status as StatusType, VISIBILITY} from './types';
 import {Heart, MessageCircle, Repeat} from './ui/Icons';
 
 interface Props extends StatusType {}
@@ -17,6 +17,7 @@ export default function Status({
   account,
   media_attachments,
   favourited,
+  visibility,
 }: Props) {
   const navigation = useNavigation();
   const {width} = useWindowDimensions();
@@ -31,43 +32,50 @@ export default function Status({
           },
         })
       }>
-      <Pressable
-        style={tw`flex-row flex-1 gap-2 items-center min-h-8`}
-        onPress={() =>
-          navigation.navigate('Root', {
-            screen: 'ProfileOverview',
-            params: {
-              screen: 'PostsStack',
-              id: account.id,
+      <View style={tw`flex-1 flex-row justify-between h-8`}>
+        <Pressable
+          style={tw`flex-row flex-1 gap-2 items-center min-h-8`}
+          onPress={() =>
+            navigation.navigate('Root', {
+              screen: 'ProfileOverview',
               params: {
+                screen: 'PostsStack',
                 id: account.id,
-                screen: 'Posts',
                 params: {
                   id: account.id,
+                  screen: 'Posts',
+                  params: {
+                    id: account.id,
+                  },
                 },
               },
-            },
-          })
-        }>
-        <Image
-          source={{uri: account.avatar_static}}
-          style={tw`w-8 h-8 rounded-lg`}
-        />
+            })
+          }>
+          <Image
+            source={{uri: account.avatar_static}}
+            style={tw`w-8 h-8 rounded-lg`}
+          />
+          <View>
+            <Text>{account.username}</Text>
+            <Text>{account.acct}</Text>
+          </View>
+        </Pressable>
         <View>
-          <Text>{account.username}</Text>
-          <Text>{account.acct}</Text>
+          {visibility !== VISIBILITY.PUBLIC && (
+            <Text style={tw`capitalize text-gray-400`}>{visibility}</Text>
+          )}
         </View>
-      </Pressable>
+      </View>
       <RenderHTML contentWidth={width} source={{html: content}} />
       {media_attachments?.length !== 0
         ? media_attachments?.map(attachment => (
             <View key={attachment.id}>
-              <Text>{attachment.description}</Text>
               <Image
                 style={tw`w-full h-42`}
                 resizeMode="contain"
                 source={{uri: attachment.preview_url}}
               />
+              <Text>{attachment.description}</Text>
             </View>
           ))
         : null}

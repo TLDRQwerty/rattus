@@ -1,3 +1,11 @@
+export const VISIBILITY = {
+  PUBLIC: 'public',
+  UNLISTED: 'unlisted',
+  PRIVATE: 'private',
+  DIRECT: 'direct',
+} as const;
+export type VISIBILITY = (typeof VISIBILITY)[keyof typeof VISIBILITY];
+
 export interface Status {
   id: string;
   created_at: string;
@@ -5,7 +13,7 @@ export interface Status {
   in_reply_to_account_id?: null;
   sensitive: boolean;
   spoiler_text: string;
-  visibility: string;
+  visibility: VISIBILITY;
   language: string;
   uri: string;
   url: string;
