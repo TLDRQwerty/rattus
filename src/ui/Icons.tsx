@@ -1,6 +1,6 @@
 import React from 'react';
 import Svg, {Line, Path} from 'react-native-svg';
-import {TextStyle} from 'react-native/types';
+import type {TextStyle} from 'react-native/types';
 
 interface Props {
   strokeWidth?: number;

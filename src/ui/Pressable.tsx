@@ -1,11 +1,8 @@
-import {cva, VariantProps} from 'class-variance-authority';
+import type {VariantProps} from 'class-variance-authority';
+import {cva} from 'class-variance-authority';
 import React from 'react';
-import {
-  GestureResponderEvent,
-  Pressable as RNPressable,
-  PressableProps,
-  StyleSheet,
-} from 'react-native';
+import type {GestureResponderEvent, PressableProps} from 'react-native';
+import {Pressable as RNPressable, StyleSheet} from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,

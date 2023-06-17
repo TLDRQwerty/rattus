@@ -1,12 +1,9 @@
 import React from 'react';
-import {
-  StyleSheet,
-  TextInput as RNTextInput,
-  TextInputProps,
-} from 'react-native';
+import type {TextInputProps} from 'react-native';
+import {StyleSheet, TextInput as RNTextInput} from 'react-native';
 import tw from '../tailwind';
 
-interface Props extends TextInputProps {}
+type Props = TextInputProps;
 
 export default function TextInput({style, ...props}: Props) {
   return (

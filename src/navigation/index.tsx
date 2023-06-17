@@ -1,10 +1,9 @@
 import React from 'react';
-import {
-  NativeStackScreenProps,
-  createNativeStackNavigator,
-} from '@react-navigation/native-stack';
-import DrawerNavigator, {DrawerNavParamList} from './DrawerNavigator';
-import {NavigatorScreenParams} from '@react-navigation/native';
+import type {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import type {DrawerNavParamList} from './DrawerNavigator';
+import DrawerNavigator from './DrawerNavigator';
+import type {NavigatorScreenParams} from '@react-navigation/native';
 import Instance from '../screens/Instance';
 import InstancePreivew from '../screens/modals/InstancePreview';
 import Login from '../screens/Login';

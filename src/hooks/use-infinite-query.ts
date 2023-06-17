@@ -1,9 +1,9 @@
-import {
+import type {
   QueryKey,
-  useInfiniteQuery as useInfiniteQueryBase,
   UseInfiniteQueryOptions,
   UseInfiniteQueryResult,
 } from '@tanstack/react-query';
+import {useInfiniteQuery as useInfiniteQueryBase} from '@tanstack/react-query';
 import {useUserStore} from '../stores/use-user';
 
 interface LinkHeader {
@@ -43,6 +43,7 @@ function parseLinkHeader(header: string): LinkHeader[] {
     links.push(link);
   }
 
+  console.log({links});
   return links;
 }
 
@@ -65,7 +66,10 @@ export default function useInfiniteQuery<
     >,
     'queryKey' | 'queryFn'
   >,
-): UseInfiniteQueryResult<{data: TData; headers: Headers}, TError> {
+): UseInfiniteQueryResult<
+  {data: TData; nextPage: string | null; prevPage: string | null},
+  TError
+> {
   const [instance, accessToken] = useUserStore(s => [
     s.instance,
     s.accessToken,
@@ -74,23 +78,36 @@ export default function useInfiniteQuery<
   if (instance == null) {
     throw Error('No instance found');
   }
-  if (accessToken == null) {
-    throw Error('No access token found');
-  }
 
-  return useInfiniteQueryBase(
-    [...key, instance, accessToken],
-    async ({pageParam}) => {
-      const url = pageParam == null ? `https://${instance}/${path}` : pageParam;
+  return useInfiniteQueryBase<
+    TQueryFnData,
+    TError,
+    {data: TData; nextPage: string | null; prevPage: string | null},
+    TQueryKey
+  >({
+    queryKey: [...key, instance, accessToken],
+    queryFn: async ({pageParam}) => {
+      let url = `https://${instance}/${path}`;
 
-      const response = await fetch(url, {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          ...data?.headers,
-        },
-        ...data,
-      });
+      if (pageParam) {
+        url = pageParam;
+      }
+
+      const headers: Headers = new Headers();
+      if (accessToken) {
+        headers.set('Authorization', `Bearer ${accessToken}`);
+      }
+
+      const response = await fetch(
+        url,
+        Object.assign(
+          {
+            method: 'GET',
+            headers: Object.assign(headers, data?.headers),
+          },
+          data,
+        ),
+      );
 
       if (!response.ok) {
         throw Error(response.statusText);
@@ -112,11 +129,9 @@ export default function useInfiniteQuery<
         prevPage,
       };
     },
-    {
-      ...options,
-      getNextPageParam: lastPage => {
-        return lastPage?.nextPage;
-      },
+    getNextPageParam: lastPage => {
+      return lastPage?.nextPage;
     },
-  );
+    ...options,
+  });
 }

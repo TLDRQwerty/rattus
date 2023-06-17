@@ -1,22 +1,22 @@
 import React from 'react';
-import {ScrollView, Text, View} from 'react-native';
-import {
-  createNativeStackNavigator,
-  NativeStackScreenProps,
-} from '@react-navigation/native-stack';
+import {View} from 'react-native';
+import type {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Profile from '../screens/profile/Profile';
-import {DrawerScreenProps} from '@react-navigation/drawer';
-import {DrawerNavParamList, RootDrawerScreenProps} from './DrawerNavigator';
-import {
+import type {DrawerScreenProps} from '@react-navigation/drawer';
+import type {
+  DrawerNavParamList,
+  RootDrawerScreenProps,
+} from './DrawerNavigator';
+import type {
   CompositeScreenProps,
   NavigatorScreenParams,
 } from '@react-navigation/native';
 import tw from '../tailwind';
 import Following from '../screens/profile/Following';
 import Followers from '../screens/profile/Followers';
-import ProfilePostsNavigator, {
-  ProfilePostsStackParamList,
-} from './ProfilePostsNavigator';
+import type {ProfilePostsStackParamList} from './ProfilePostsNavigator';
+import ProfilePostsNavigator from './ProfilePostsNavigator';
 
 const Stack = createNativeStackNavigator<ProfileStackParamList>();
 

@@ -1,18 +1,11 @@
-import {CommonActions, useNavigation} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import {
-  ActivityIndicator,
-  Image,
-  RefreshControl,
-  Text,
-  View,
-  VirtualizedList,
-} from 'react-native';
-import useInfiniteQuery from '../../hooks/use-infinite-query';
+import {Text, View} from 'react-native';
 import useList from '../../hooks/use-list';
-import {ProfileScreenParams} from '../../navigation/ProfileNavigator';
+import type {ProfileScreenParams} from '../../navigation/ProfileNavigator';
 import tw from '../../tailwind';
-import {Account as AccountType} from '../../types';
+import type {Account as AccountType} from '../../types';
+import Image from '../../ui/Image';
 import Pressable from '../../ui/Pressable';
 
 export default function Following({route}: ProfileScreenParams<'Following'>) {

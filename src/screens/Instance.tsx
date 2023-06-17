@@ -1,7 +1,7 @@
 import {useMutation} from '@tanstack/react-query';
 import React, {useState} from 'react';
 import {View, Text, Image} from 'react-native';
-import {RootStackScreenProps} from '../navigation';
+import type {RootStackScreenProps} from '../navigation';
 import {useUserStore} from '../stores/use-user';
 import tw from '../tailwind';
 import {Instance as InstanceType} from '../types';
@@ -25,14 +25,20 @@ export default function Instance({
     },
   );
   return (
-    <View>
-      <View style={tw`flex-row items-center`}>
-        <Text>https://</Text>
-        <TextInput value={uri} onChangeText={setUri} />
+    <View style={tw`w-screen h-screen`}>
+      <View style={tw`my-auto px-4 gap-8`}>
+        <View style={tw`flex-row items-center`}>
+          <Text>https://</Text>
+          <TextInput
+            style={tw`flex-row flex-1`}
+            value={uri}
+            onChangeText={setUri}
+          />
+        </View>
+        <Pressable type="button" onPress={() => mutate(uri)}>
+          <Text>Preview Instance</Text>
+        </Pressable>
       </View>
-      <Pressable type="button" onPress={() => mutate(uri)}>
-        <Text>Preview Instance</Text>
-      </Pressable>
     </View>
   );
 }

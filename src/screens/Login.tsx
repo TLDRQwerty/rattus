@@ -1,9 +1,10 @@
 import React, {useRef} from 'react';
-import {WebView, WebViewNavigation} from 'react-native-webview';
+import type {WebViewNavigation} from 'react-native-webview';
+import {WebView} from 'react-native-webview';
 import {CLIENT_ID, CLIENT_SECRET} from '@env';
-import {RootStackScreenProps} from '../navigation';
+import type {RootStackScreenProps} from '../navigation';
 import {useUserStore} from '../stores/use-user';
-import { auth } from '../api/auth';
+import {auth} from '../api/auth';
 //
 // https://mastodon.example/oauth/authorize
 // ?client_id=CLIENT_ID

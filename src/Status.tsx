@@ -1,17 +1,22 @@
 import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import {View, Text, Image, useWindowDimensions, Pressable} from 'react-native';
+import {View, useWindowDimensions} from 'react-native';
 import RenderHTML from 'react-native-render-html';
 import tw from './tailwind';
-import {Status as StatusType, VISIBILITY} from './types';
+import type {Status as StatusType} from './types';
+import {VISIBILITY} from './types';
 import {Heart, MessageCircle, Repeat} from './ui/Icons';
+import Image from './ui/Image';
+import Pressable from './ui/Pressable';
+import Text from './ui/Text';
 
-interface Props extends StatusType {}
+type Props = StatusType;
 
 export default function Status({
   id,
   content,
   reblogs_count,
+  reblogged,
   replies_count,
   favourites_count,
   account,
@@ -32,7 +37,7 @@ export default function Status({
           },
         })
       }>
-      <View style={tw`flex-1 flex-row justify-between h-8`}>
+      <View style={tw`w-full justify-between h-8`}>
         <Pressable
           style={tw`flex-row flex-1 gap-2 items-center min-h-8`}
           onPress={() =>
@@ -85,7 +90,7 @@ export default function Status({
           <Text>{replies_count}</Text>
         </View>
         <View style={tw`flex-row items-center`}>
-          <Repeat />
+          <Repeat style={tw.style(reblogged && 'text-violet-600')} />
           <Text>{reblogs_count}</Text>
         </View>
         <View style={tw`flex-row items-center`}>

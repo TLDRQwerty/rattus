@@ -7,11 +7,11 @@ import {
   Pressable,
   RefreshControl,
 } from 'react-native';
-import {Status as StatusType} from '../types';
+import type {Status as StatusType} from '../types';
 import tw from '../tailwind';
 import {useNavigation} from '@react-navigation/native';
 import Status from '../Status';
-import {RootDrawerScreenProps} from '../navigation/DrawerNavigator';
+import type {RootDrawerScreenProps} from '../navigation/DrawerNavigator';
 import useInfiniteQuery from '../hooks/use-infinite-query';
 
 export default function PublicTimeline({}: RootDrawerScreenProps<'ExploreTimeline'>) {

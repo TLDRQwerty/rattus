@@ -1,19 +1,16 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
   ActivityIndicator,
   RefreshControl,
   Text,
-  View,
   VirtualizedList,
 } from 'react-native';
-import RenderHTML from 'react-native-render-html';
 import useAuthQuery from '../hooks/use-auth-query';
-import {RootDrawerScreenProps} from '../navigation/DrawerNavigator';
+import type {RootDrawerScreenProps} from '../navigation/DrawerNavigator';
 import tw from '../tailwind';
-import {Status as StatusType, Context as ContextType} from '../types';
+import type {Status as StatusType, Context as ContextType} from '../types';
 import StatusComponent from '../Status';
 import useInfiniteQuery from '../hooks/use-infinite-query';
-import useList from '../hooks/use-list';
 
 function Status({id}: {id: string}) {
   const {data, isLoading, isError} = useAuthQuery<StatusType>(

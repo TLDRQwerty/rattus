@@ -1,11 +1,12 @@
 import React from 'react';
 import {View, Text} from 'react-native';
-import {CompositeScreenProps} from '@react-navigation/native';
-import {
-  createNativeStackNavigator,
-  NativeStackScreenProps,
-} from '@react-navigation/native-stack';
-import {ProfileScreenParams, ProfileStackParamList} from './ProfileNavigator';
+import type {CompositeScreenProps} from '@react-navigation/native';
+import type {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import type {
+  ProfileScreenParams,
+  ProfileStackParamList,
+} from './ProfileNavigator';
 import Posts from '../screens/profile/Posts';
 import PostsAndReplies from '../screens/profile/PostsAndReplies';
 import Media from '../screens/profile/Media';

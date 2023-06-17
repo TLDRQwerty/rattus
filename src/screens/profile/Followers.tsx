@@ -2,9 +2,9 @@ import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {Image, Text, View} from 'react-native';
 import useList from '../../hooks/use-list';
-import {ProfileScreenParams} from '../../navigation/ProfileNavigator';
+import type {ProfileScreenParams} from '../../navigation/ProfileNavigator';
 import tw from '../../tailwind';
-import {Account as AccountType} from '../../types';
+import type {Account as AccountType} from '../../types';
 import Pressable from '../../ui/Pressable';
 
 export default function Followers({route}: ProfileScreenParams<'Followers'>) {

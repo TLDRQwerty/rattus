@@ -1,4 +1,5 @@
-import {QueryKey, useQuery, UseQueryOptions} from '@tanstack/react-query';
+import type {QueryKey, UseQueryOptions} from '@tanstack/react-query';
+import {useQuery} from '@tanstack/react-query';
 import {useUserStore} from '../stores/use-user';
 export default function useAuthQuery<
   TQueryFnData = unknown,
@@ -20,15 +21,17 @@ export default function useAuthQuery<
     s.instance,
     s.accessToken,
   ]);
-  if (instance == null) {
-    throw Error('No instance found');
-  }
-  if (accessToken == null) {
-    throw Error('No access token found');
-  }
-  return useQuery<TQueryFnData, TError, TData, TQueryKey>(
-    [...key, instance, accessToken],
-    async () => {
+
+  return useQuery<TQueryFnData, TError, TData, TQueryKey>({
+    queryKey: [...key, instance, accessToken],
+    queryFn: async () => {
+      if (instance == null) {
+        throw Error('No instance found');
+      }
+      if (accessToken == null) {
+        throw Error('No access token found');
+      }
+
       const response = await fetch(`https://${instance}/${path}`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -43,6 +46,6 @@ export default function useAuthQuery<
 
       return response.json();
     },
-    options,
-  );
+    ...options,
+  });
 }

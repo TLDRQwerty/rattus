@@ -14,7 +14,7 @@ interface Store {
 export const useUserStore = create<Store>()(
   persist(
     set => ({
-      instance: null,
+      instance: 'mastodon.social',
       setInstance: instance => set({instance}),
       accessToken: null,
       setAccessToken: accessToken => set({accessToken}),

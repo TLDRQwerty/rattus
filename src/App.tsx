@@ -3,7 +3,8 @@ import {
   useNavigationContainerRef,
 } from '@react-navigation/native';
 import React, {useEffect} from 'react';
-import {AppState, AppStateStatus, Platform} from 'react-native';
+import type {AppStateStatus} from 'react-native';
+import {AppState, Platform} from 'react-native';
 import {useDeviceContext} from 'twrnc';
 import tw from './tailwind';
 import Navigator from './navigation';

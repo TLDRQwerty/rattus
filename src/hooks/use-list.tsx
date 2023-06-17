@@ -1,13 +1,7 @@
-import React, {ReactNode, useCallback, useMemo} from 'react';
-import {
-  ActivityIndicator,
-  ListRenderItem,
-  RefreshControl,
-  Text,
-  View,
-  VirtualizedList,
-  VirtualizedListProps,
-} from 'react-native';
+import type {ReactNode} from 'react';
+import React, {useCallback, useMemo} from 'react';
+import type {VirtualizedListProps} from 'react-native';
+import {ActivityIndicator, Text, View, VirtualizedList} from 'react-native';
 import tw from '../tailwind';
 import useInfiniteQuery from './use-infinite-query';
 
@@ -87,7 +81,6 @@ export default function useList<TType extends {id: string}>({
         ItemSeparatorComponent={ItemSeparatorComponent}
         ListFooterComponent={renderListFooterComponent}
         CellRendererComponent={CellRendererComponent}
-        debug
         {...rest}
       />
     );

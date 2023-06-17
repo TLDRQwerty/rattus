@@ -1,17 +1,11 @@
 import {CommonActions, useNavigation} from '@react-navigation/native';
-import React from 'react';
-import {
-  ActivityIndicator,
-  View,
-  Image,
-  Text,
-  useWindowDimensions,
-} from 'react-native';
+import React, {useEffect} from 'react';
+import {ActivityIndicator, View, Text, useWindowDimensions} from 'react-native';
 import RenderHTML from 'react-native-render-html';
 import useAuthQuery from '../../hooks/use-auth-query';
-import {ProfileScreenParams} from '../../navigation/ProfileNavigatior';
 import tw from '../../tailwind';
-import {Account} from '../../types';
+import type {Account} from '../../types';
+import Image from '../../ui/Image';
 import Pressable from '../../ui/Pressable';
 
 export default function Profile({id}: {id: string}) {
@@ -21,6 +15,13 @@ export default function Profile({id}: {id: string}) {
     ['api/v1/accounts', id],
     `api/v1/accounts/${id}`,
   );
+  useEffect(() => {
+    if (data) {
+      navigation.setOptions({
+        title: data.display_name !== '' ? data.display_name : data.username,
+      });
+    }
+  }, [data, navigation]);
   if (isError || data == null) {
     return null;
   }

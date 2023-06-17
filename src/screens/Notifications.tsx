@@ -1,12 +1,12 @@
 import React from 'react';
-import {ListRenderItem, Text, View} from 'react-native';
-import {Notification} from '../types';
+import type {ListRenderItem} from 'react-native';
+import {Text, View} from 'react-native';
+import type {Notification} from '../types';
 import Status from '../Status';
 import useList from '../hooks/use-list';
 
 export default function Notifications() {
   const renderItem: ListRenderItem<Notification> = ({item}) => {
-    console.log({item});
     switch (item.type) {
       case 'follow':
         return (

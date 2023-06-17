@@ -1,9 +1,9 @@
 import React from 'react';
 import {Pressable} from 'react-native';
-import {Status as StatusType} from '../types';
+import type {Status as StatusType} from '../types';
 import {useNavigation} from '@react-navigation/native';
 import Status from '../Status';
-import {RootDrawerScreenProps} from '../navigation/DrawerNavigator';
+import type {RootDrawerScreenProps} from '../navigation/DrawerNavigator';
 import useList from '../hooks/use-list';
 
 export default function PublicTimeline({}: RootDrawerScreenProps<'PublicTimeline'>) {

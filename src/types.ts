@@ -199,7 +199,7 @@ export interface Rule {
   text: string;
 }
 
-export interface CredentialAccount extends Account {}
+export type CredentialAccount = Account;
 
 export interface Context {
   ancestors: Status[];
