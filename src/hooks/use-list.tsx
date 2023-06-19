@@ -2,6 +2,7 @@ import type {ReactNode} from 'react';
 import React, {useCallback, useMemo} from 'react';
 import type {VirtualizedListProps} from 'react-native';
 import {ActivityIndicator, Text, View, VirtualizedList} from 'react-native';
+import {RefreshControl} from 'react-native-gesture-handler';
 import tw from '../tailwind';
 import useInfiniteQuery from './use-infinite-query';
 
@@ -50,6 +51,10 @@ export default function useList<TType extends {id: string}>({
     void fetchNextPage();
   }, [fetchNextPage, isFetching, isLoading]);
 
+  const onRefresh = useCallback(() => {
+    void refetch();
+  }, [refetch]);
+
   const renderListFooterComponent = useCallback(() => {
     if (isLoading || isFetching) {
       return <ActivityIndicator />;
@@ -74,10 +79,9 @@ export default function useList<TType extends {id: string}>({
         getItemCount={getItemCount}
         getItem={getItem}
         initialNumToRender={4}
-        onEndReachedThreshold={0.3}
-        onEndReached={onEndReached}
-        refreshing={isRefetching}
-        onRefresh={void refetch}
+        refreshControl={
+          <RefreshControl refreshing={isRefetching} onRefresh={onRefresh} />
+        }
         ItemSeparatorComponent={ItemSeparatorComponent}
         ListFooterComponent={renderListFooterComponent}
         CellRendererComponent={CellRendererComponent}

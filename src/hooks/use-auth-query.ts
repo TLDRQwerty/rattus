@@ -26,10 +26,10 @@ export default function useAuthQuery<
     queryKey: [...key, instance, accessToken],
     queryFn: async () => {
       if (instance == null) {
-        throw Error('No instance found');
+        console.error('No instance found');
       }
       if (accessToken == null) {
-        throw Error('No access token found');
+        console.error('No access token found');
       }
 
       const response = await fetch(`https://${instance}/${path}`, {
@@ -41,7 +41,9 @@ export default function useAuthQuery<
       });
 
       if (!response.ok) {
-        throw Error(response.statusText);
+        console.error(
+          `The response returned not ok with status ${response.status}`,
+        );
       }
 
       return response.json();

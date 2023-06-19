@@ -75,10 +75,6 @@ export default function useInfiniteQuery<
     s.accessToken,
   ]);
 
-  if (instance == null) {
-    throw Error('No instance found');
-  }
-
   return useInfiniteQueryBase<
     TQueryFnData,
     TError,
@@ -87,6 +83,13 @@ export default function useInfiniteQuery<
   >({
     queryKey: [...key, instance, accessToken],
     queryFn: async ({pageParam}) => {
+      if (instance == null) {
+        console.error('No instance found');
+      }
+      if (accessToken == null) {
+        console.error('No access token found');
+      }
+
       let url = `https://${instance}/${path}`;
 
       if (pageParam) {
@@ -110,7 +113,7 @@ export default function useInfiniteQuery<
       );
 
       if (!response.ok) {
-        throw Error(response.statusText);
+        console.error(`The response returned not ok with status ${response.status}`);
       }
 
       const linkHeaders = response.headers.get('link');
