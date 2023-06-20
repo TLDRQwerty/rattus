@@ -33,6 +33,8 @@ export default function Instance({
             style={tw`flex-row flex-1`}
             value={uri}
             onChangeText={setUri}
+            autoCapitalize="none"
+            autoCorrect={false}
           />
         </View>
         <Pressable type="button" onPress={() => mutate(uri)}>

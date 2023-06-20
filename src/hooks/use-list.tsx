@@ -20,6 +20,7 @@ const CellRendererComponent = ({children}: {children: ReactNode}) => (
 export default function useList<TType extends {id: string}>({
   endpoint,
   renderItem,
+  ListFooterComponent,
   ...rest
 }: {
   endpoint: TemplateStringsArray | string;
@@ -39,7 +40,7 @@ export default function useList<TType extends {id: string}>({
   );
 
   const flatData = useMemo(
-    () => data?.pages.map(page => page.data).flat(),
+    () => data?.pages.flatMap(page => page.data),
     [data?.pages],
   );
 
@@ -82,8 +83,9 @@ export default function useList<TType extends {id: string}>({
         refreshControl={
           <RefreshControl refreshing={isRefetching} onRefresh={onRefresh} />
         }
+        onEndReached={onEndReached}
         ItemSeparatorComponent={ItemSeparatorComponent}
-        ListFooterComponent={renderListFooterComponent}
+        ListFooterComponent={renderListFooterComponent ?? ListFooterComponent}
         CellRendererComponent={CellRendererComponent}
         {...rest}
       />

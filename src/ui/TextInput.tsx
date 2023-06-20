@@ -8,7 +8,10 @@ type Props = TextInputProps;
 export default function TextInput({style, ...props}: Props) {
   return (
     <RNTextInput
-      style={StyleSheet.compose(tw`border rounded bg-gray-200 h-10`, style)}
+      style={StyleSheet.compose(
+        tw`border rounded bg-gray-200 text-black h-10`,
+        style,
+      )}
       {...props}
     />
   );

@@ -44,15 +44,7 @@ export default function Status({
             navigation.navigate('Root', {
               screen: 'ProfileOverview',
               params: {
-                screen: 'PostsStack',
                 id: account.id,
-                params: {
-                  id: account.id,
-                  screen: 'Posts',
-                  params: {
-                    id: account.id,
-                  },
-                },
               },
             })
           }>

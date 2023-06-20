@@ -16,7 +16,10 @@ export default function InstancePreivew({
     async () => {
       const response = await fetch(`https://${uri}/api/v2/instance`);
       if (!response.ok) {
-        throw Error('An unknown error occured');
+        console.error(
+          `The response returned not ok with status ${response.status}`,
+        );
+        return null
       }
       return response.json();
     },

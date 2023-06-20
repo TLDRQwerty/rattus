@@ -15,7 +15,8 @@ export const useUserStore = create<Store>()(
   persist(
     set => ({
       instance: 'mastodon.social',
-      setInstance: instance => set({instance}),
+      setInstance: instance =>
+        instance == null ? set({instance: 'mastodon.social'}) : set({instance}),
       accessToken: null,
       setAccessToken: accessToken => set({accessToken}),
       code: null,
