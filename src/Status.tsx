@@ -5,6 +5,7 @@ import RenderHTML from 'react-native-render-html';
 import tw from './tailwind';
 import type {Status as StatusType} from './types';
 import {VISIBILITY} from './types';
+import Account from './ui/Account';
 import {Heart, MessageCircle, Repeat} from './ui/Icons';
 import Image from './ui/Image';
 import Pressable from './ui/Pressable';
@@ -17,6 +18,7 @@ export default function Status({
   content,
   reblogs_count,
   reblogged,
+  reblog,
   replies_count,
   favourites_count,
   account,
@@ -26,6 +28,19 @@ export default function Status({
 }: Props) {
   const navigation = useNavigation();
   const {width} = useWindowDimensions();
+  if (reblog) {
+    return (
+      <View>
+        <Account
+          id={account.id}
+          username={account.username}
+          fullUsername={account.acct}
+          avatarUri={account.avatar_static}
+        />
+        <Status {...reblog} />
+      </View>
+    );
+  }
   return (
     <Pressable
       style={tw`px-2 py-4`}
@@ -38,25 +53,12 @@ export default function Status({
         })
       }>
       <View style={tw`w-full justify-between h-8`}>
-        <Pressable
-          style={tw`flex-row flex-1 gap-2 items-center min-h-8`}
-          onPress={() =>
-            navigation.navigate('Root', {
-              screen: 'ProfileOverview',
-              params: {
-                id: account.id,
-              },
-            })
-          }>
-          <Image
-            source={{uri: account.avatar_static}}
-            style={tw`w-8 h-8 rounded-lg`}
-          />
-          <View>
-            <Text>{account.username}</Text>
-            <Text>{account.acct}</Text>
-          </View>
-        </Pressable>
+        <Account
+          id={account.id}
+          username={account.username}
+          fullUsername={account.acct}
+          avatarUri={account.avatar_static}
+        />
         <View>
           {visibility !== VISIBILITY.PUBLIC && (
             <Text style={tw`capitalize text-gray-400`}>{visibility}</Text>

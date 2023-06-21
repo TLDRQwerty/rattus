@@ -23,7 +23,7 @@ import Notifications from '../screens/Notifications';
 import useAuthQuery from '../hooks/use-auth-query';
 import Text from '../ui/Text';
 import Image from '../ui/Image';
-import ProfileNavigator from '../screens/profile/ProfileNavigator';
+import ProfileNavigator, { PROFILE_TAB } from '../screens/profile/ProfileNavigator';
 
 const Drawer = createDrawerNavigator<DrawerNavParamList>();
 
@@ -142,7 +142,7 @@ export type DrawerNavParamList = {
   ExploreTimeline: undefined;
   Notifications: undefined;
   Status: {id: string};
-  ProfileOverview: {id: string};
+  ProfileOverview: {id: string; tab?: PROFILE_TAB};
 };
 
 export type RootDrawerScreenProps<Screen extends keyof DrawerNavParamList> =

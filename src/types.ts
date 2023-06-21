@@ -25,7 +25,7 @@ export interface Status {
   muted: boolean;
   bookmarked: boolean;
   content: string;
-  reblog?: null;
+  reblog?: this | null;
   application: Application;
   account: Account;
   media_attachments?: Attachment[] | null;

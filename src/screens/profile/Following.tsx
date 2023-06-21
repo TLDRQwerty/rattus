@@ -1,48 +1,21 @@
-import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import {Text, View} from 'react-native';
 import useList from '../../hooks/use-list';
 import type {ProfileScreenParams} from '../../navigation/ProfileNavigator';
-import tw from '../../tailwind';
 import type {Account as AccountType} from '../../types';
-import Image from '../../ui/Image';
-import Pressable from '../../ui/Pressable';
+import Account from '../../ui/Account';
 
 export default function Following({route}: ProfileScreenParams<'Following'>) {
   const {id} = route.params;
   const {Component} = useList<AccountType>({
     endpoint: `api/v1/accounts/${id}/following`,
-    renderItem: item => <Account {...item.item} />,
+    renderItem: ({item}) => (
+      <Account
+        id={item.id}
+        avatarUri={item.avatar_static}
+        fullUsername={item.acct}
+        username={item.username}
+      />
+    ),
   });
   return Component;
-}
-
-function Account({avatar, username, url, id}: AccountType) {
-  const navigation = useNavigation();
-  return (
-    <Pressable
-      style={tw`flex-row gap-2`}
-      onPress={() =>
-        navigation.navigate('Root', {
-          screen: 'ProfileOverview',
-          params: {
-            id,
-            screen: 'PostsStack',
-            params: {
-              id,
-              screen: 'Posts',
-              params: {
-                id,
-              },
-            },
-          },
-        })
-      }>
-      <Image source={{uri: avatar}} style={tw`rounded-lg w-8`} />
-      <View>
-        <Text>{username}</Text>
-        <Text>{url}</Text>
-      </View>
-    </Pressable>
-  );
 }

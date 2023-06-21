@@ -1,5 +1,5 @@
 import {useNavigation} from '@react-navigation/native';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {ActivityIndicator, Image, View} from 'react-native';
 import useList from '../../hooks/use-list';
 import type {RootDrawerScreenProps} from '../../navigation/DrawerNavigator';
@@ -52,12 +52,23 @@ export default function ProfileNavigator({
   route,
   navigation,
 }: RootDrawerScreenProps<'ProfileOverview'>) {
-  const {id} = route.params;
+  const oldId = useRef<null | string>(null);
+  const {id, tab} = route.params;
   const {data: profile, isLoading} = useAuthQuery<AccountType>(
     ['api/v1/accounts', id],
     `api/v1/accounts/${id}`,
   );
-  const [profileTab, setProfileTab] = useState<PROFILE_TAB>(PROFILE_TAB.POSTS);
+  const [profileTab, setProfileTab] = useState<PROFILE_TAB>(
+    tab ?? PROFILE_TAB.POSTS,
+  );
+
+  useEffect(() => {
+    if (oldId.current !== id) {
+      oldId.current = id;
+      setProfileTab(PROFILE_TAB.POSTS);
+    }
+  }, [id]);
+
   const {Component} = useList<
     typeof profileTab extends typeof PROFILE_TAB.POSTS
       ? StatusType
