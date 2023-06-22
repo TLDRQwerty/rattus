@@ -1,4 +1,7 @@
 {
   "name": "rattus",
-  "displayName": "rattus"
+  "displayName": "rattus",
+  "plugins": [
+      "expo-build-properties",
+  ]
 }
