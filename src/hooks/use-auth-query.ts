@@ -32,11 +32,13 @@ export default function useAuthQuery<
         console.error('No access token found');
       }
 
+      const headers: Headers = new Headers();
+      if (accessToken) {
+        headers.set('Authorization', `Bearer ${accessToken}`);
+      }
+
       const response = await fetch(`https://${instance}/${path}`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          ...data?.headers,
-        },
+        headers,
         ...data,
       });
 

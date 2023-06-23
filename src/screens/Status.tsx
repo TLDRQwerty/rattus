@@ -2,51 +2,30 @@ import React from 'react';
 import {
   ActivityIndicator,
   RefreshControl,
-  Text,
   VirtualizedList,
+  View,
 } from 'react-native';
 import useAuthQuery from '../hooks/use-auth-query';
 import type {RootDrawerScreenProps} from '../navigation/DrawerNavigator';
 import tw from '../tailwind';
 import type {Status as StatusType, Context as ContextType} from '../types';
-import StatusComponent from '../Status';
-import useInfiniteQuery from '../hooks/use-infinite-query';
+import Status from '../Status';
+import Text from '../ui/Text';
 
-function Status({id}: {id: string}) {
-  const {data, isLoading, isError} = useAuthQuery<StatusType>(
-    ['api/v1/statuses', id],
-    `api/v1/statuses/${id}`,
-  );
-
-  if (isLoading) {
-    return <ActivityIndicator />;
-  }
-
-  if (data == null || isError) {
-    return null;
-  }
-
-  return <StatusComponent {...data} />;
-}
+const getItemCount = (arr: unknown[]) => arr.length;
+const getItem = (arr: any[], index: number): any => arr[index];
+const keyExtractor = (obj: {id: string}) => obj.id;
 
 export default function Context({route}: RootDrawerScreenProps<'Status'>) {
   const {id} = route.params;
-  const {
-    data,
-    isLoading,
-    isError,
-    error,
-    fetchNextPage,
-    isFetching,
-    refetch,
-    isRefetching,
-  } = useInfiniteQuery<ContextType>(
-    ['api/v1/statuses/context', id],
-    `api/v1/statuses/${id}/context`,
-  );
+  const {data, isLoading, isError, error, refetch, isRefetching} =
+    useAuthQuery<ContextType>(
+      ['api/v1/statuses/context', id],
+      `api/v1/statuses/${id}/context`,
+    );
 
   const renderListHeaderComponent = () => {
-    return <Status id={id} />;
+    return <FetchedStatus id={id} />;
   };
   if (isLoading || data == null) {
     return <ActivityIndicator />;
@@ -57,14 +36,12 @@ export default function Context({route}: RootDrawerScreenProps<'Status'>) {
   return (
     <VirtualizedList<StatusType>
       ListHeaderComponent={renderListHeaderComponent}
-      data={data.pages.map(page => page.data.descendants).flat()}
-      getItemCount={(d: StatusType[]) => d.length}
-      getItem={(d: StatusType[], i) => d[i]}
+      data={data.descendants}
+      getItemCount={getItemCount}
+      getItem={getItem}
       renderItem={item => <Status {...item.item} />}
+      keyExtractor={keyExtractor}
       contentContainerStyle={tw`gap-4`}
-      onEndReached={
-        fetchNextPage != null && !isFetching ? () => fetchNextPage() : undefined
-      }
       refreshControl={
         <RefreshControl
           refreshing={isRefetching}
@@ -75,5 +52,26 @@ export default function Context({route}: RootDrawerScreenProps<'Status'>) {
       }
       onEndReachedThreshold={0.3}
     />
+  );
+}
+
+function FetchedStatus({id}: {id: string}) {
+  const {data, status, error} = useAuthQuery<StatusType>(
+    ['api/v1/statuses', id],
+    `api/v1/statuses/${id}`,
+  );
+
+  if (status === 'loading') {
+    return <ActivityIndicator />;
+  }
+
+  if (status === 'error') {
+    return <Text>{String(error)}</Text>;
+  }
+
+  return (
+    <View style={tw`border-b border-gray-400`}>
+      <Status {...data} />
+    </View>
   );
 }

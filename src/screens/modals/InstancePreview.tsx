@@ -19,7 +19,7 @@ export default function InstancePreivew({
         console.error(
           `The response returned not ok with status ${response.status}`,
         );
-        return null
+        return null;
       }
       return response.json();
     },

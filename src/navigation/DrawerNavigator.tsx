@@ -23,7 +23,8 @@ import Notifications from '../screens/Notifications';
 import useAuthQuery from '../hooks/use-auth-query';
 import Text from '../ui/Text';
 import Image from '../ui/Image';
-import ProfileNavigator, { PROFILE_TAB } from '../screens/profile/ProfileNavigator';
+import type {PROFILE_TAB} from '../screens/profile/ProfileNavigator';
+import ProfileNavigator from '../screens/profile/ProfileNavigator';
 
 const Drawer = createDrawerNavigator<DrawerNavParamList>();
 

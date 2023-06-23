@@ -27,11 +27,10 @@ export default function useList<TType extends {id: string}>({
 } & VirtualizedListProps<TType>) {
   const {
     data,
-    isLoading,
-    isError,
+    status,
     error,
     fetchNextPage,
-    isFetching,
+    isFetchingNextPage,
     refetch,
     isRefetching,
   } = useInfiniteQuery<TType[]>(
@@ -39,39 +38,36 @@ export default function useList<TType extends {id: string}>({
     typeof endpoint === 'string' ? endpoint : endpoint.join(),
   );
 
-  const flatData = useMemo(
-    () => data?.pages.flatMap(page => page.data),
-    [data?.pages],
-  );
+  const flatData = useMemo(() => data?.pages.flatMap(d => d.data), [data]);
 
   const onEndReached = useCallback(() => {
-    if (isLoading || isFetching || fetchNextPage == null) {
+    if (status !== 'success' || isFetchingNextPage || fetchNextPage == null) {
       return;
     }
 
     void fetchNextPage();
-  }, [fetchNextPage, isFetching, isLoading]);
+  }, [fetchNextPage, status, isFetchingNextPage]);
 
   const onRefresh = useCallback(() => {
     void refetch();
   }, [refetch]);
 
   const renderListFooterComponent = useCallback(() => {
-    if (isLoading || isFetching) {
+    if (isFetchingNextPage) {
       return <ActivityIndicator />;
     }
     return null;
-  }, [isLoading, isFetching]);
+  }, [isFetchingNextPage]);
 
   let Component = null;
-  if (isLoading && data == null) {
+  if (status === 'loading' && data == null) {
     Component = <ActivityIndicator />;
   }
-  if (isError) {
+  if (status === 'error') {
     Component = <Text>{String(error)}</Text>;
   }
 
-  if (data != null && !isLoading) {
+  if (data != null) {
     Component = (
       <VirtualizedList<TType>
         data={flatData}

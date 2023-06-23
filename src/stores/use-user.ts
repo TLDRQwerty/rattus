@@ -3,7 +3,7 @@ import {create} from 'zustand';
 import {persist, createJSONStorage} from 'zustand/middleware';
 
 interface Store {
-  instance: string | null;
+  instance: string;
   setInstance: (instance: string | null) => void;
   accessToken: string | null;
   setAccessToken: (accessToken: string | null) => void;

@@ -44,6 +44,7 @@
     "@babel/preset-env": "^7.20.2",
     "@babel/runtime": "^7.21.0",
     "@react-native-community/cli-doctor": "^11.3.3",
+    "@react-native/eslint-config": "^0.72.2",
     "@react-native/metro-config": "^0.72.6",
     "@react-navigation/devtools": "^6.0.18",
     "@tsconfig/react-native": "^2.0.3",

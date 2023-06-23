@@ -43,7 +43,6 @@ function parseLinkHeader(header: string): LinkHeader[] {
     links.push(link);
   }
 
-  console.log({links});
   return links;
 }
 
@@ -113,7 +112,9 @@ export default function useInfiniteQuery<
       );
 
       if (!response.ok) {
-        console.error(`The response returned not ok with status ${response.status}`);
+        console.error(
+          `The response returned not ok with status ${response.status}`,
+        );
       }
 
       const linkHeaders = response.headers.get('link');

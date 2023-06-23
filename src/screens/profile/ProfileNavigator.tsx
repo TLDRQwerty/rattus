@@ -126,11 +126,13 @@ export default function ProfileNavigator({
 
   return (
     <ScrollView>
-      {isLoading || !profile ? (
-        <ActivityIndicator />
-      ) : (
-        <Profile profile={profile} />
-      )}
+      <View style={tw`border-b border-black`}>
+        {isLoading || !profile ? (
+          <ActivityIndicator />
+        ) : (
+          <Profile profile={profile} />
+        )}
+      </View>
       {Component}
     </ScrollView>
   );

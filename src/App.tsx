@@ -1,3 +1,4 @@
+import type {LinkingOptions} from '@react-navigation/native';
 import {
   NavigationContainer,
   useNavigationContainerRef,
@@ -7,6 +8,7 @@ import type {AppStateStatus} from 'react-native';
 import {AppState, Platform} from 'react-native';
 import {useDeviceContext} from 'twrnc';
 import tw from './tailwind';
+import type {RootStackParamList} from './navigation';
 import Navigator from './navigation';
 import {
   QueryClient,
@@ -38,11 +40,11 @@ function onAppStateChange(status: AppStateStatus) {
   }
 }
 
-const config = {};
-
-const linking = {
+const linking: LinkingOptions<RootStackParamList> = {
   prefixes: ['rattus://'],
-  config,
+  config: {
+    screens: {},
+  },
 };
 
 export default function App() {
@@ -57,12 +59,12 @@ export default function App() {
     return () => subscription.remove();
   }, []);
   return (
-    <GestureHandlerRootView style={tw`flex-1`}>
-      <QueryClientProvider client={queryClient}>
-        <NavigationContainer linking={linking} ref={navigationRef}>
+    <NavigationContainer linking={linking} ref={navigationRef}>
+      <GestureHandlerRootView style={tw`flex-1`}>
+        <QueryClientProvider client={queryClient}>
           <Navigator />
-        </NavigationContainer>
-      </QueryClientProvider>
-    </GestureHandlerRootView>
+        </QueryClientProvider>
+      </GestureHandlerRootView>
+    </NavigationContainer>
   );
 }
