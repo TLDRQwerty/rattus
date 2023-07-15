@@ -66,3 +66,4 @@ yarn-error.log
 
 # testing
 /coverage
+.expo

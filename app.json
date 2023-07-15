@@ -1,7 +1,23 @@
 {
-  "name": "rattus",
-  "displayName": "rattus",
-  "plugins": [
-      "expo-build-properties",
-  ]
+	"expo": {
+		"name": "Ratttus",
+		"slug": "ratuts",
+		"owner": "spacedrive",
+		"version": "0.0.1",
+		"orientation": "portrait",
+		"jsEngine": "hermes",
+		"scheme": "ratuts",
+		"platforms": ["ios", "android"],
+		"userInterfaceStyle": "automatic",
+		"updates": {
+			"enabled": false,
+			"fallbackToCacheTimeout": 0
+		},
+		"assetBundlePatterns": ["**/*"],
+		"ios": {
+			"supportsTablet": false
+		},
+		"android": {},
+		"privacy": "hidden"
+	}
 }

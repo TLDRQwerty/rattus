@@ -3,11 +3,11 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "android": "react-native run-android",
-    "ios": "react-native run-ios",
+    "start": "expo start --dev-client",
+		"android": "expo run:android",
+		"ios": "expo run:ios",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "start": "react-native start",
     "test": "jest"
   },
   "dependencies": {
@@ -23,6 +23,7 @@
     "@rnx-kit/metro-resolver-symlinks": "^0.1.27",
     "@tanstack/react-query": "^4.26.1",
     "class-variance-authority": "^0.4.0",
+    "expo": "^49.0.3",
     "jsc-android": "^250231.0.0",
     "parse-link-header": "^2.0.0",
     "react": "18.2.0",

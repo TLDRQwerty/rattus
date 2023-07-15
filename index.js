@@ -1,6 +1,5 @@
-import './src/wdyr';
-import {AppRegistry} from 'react-native';
+import {registerRootComponent} from 'expo';
 import App from './src/App';
-import {name as appName} from './app.json';
+import './src/wdyr';
 
-AppRegistry.registerComponent(appName, () => App);
+registerRootComponent(App);
