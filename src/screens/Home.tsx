@@ -40,7 +40,7 @@ export default function Home({
         <View style={tw`bg-white`}>
           <List value={selectedList} onChange={setSelectedList}>
             <List.Button>
-              <Text>{selectedList.name}</Text>
+              <Text style={tw`text-xl`}>{selectedList.name}</Text>
             </List.Button>
             <List.Options>
               {list.map(item => (
@@ -54,7 +54,7 @@ export default function Home({
                         'text-primary-400': item.id === selectedList.id,
                       })}
                     />
-                    <Text>{item.name}</Text>
+                    <Text style={tw`text-lg`}>{item.name}</Text>
                   </View>
                 </List.Option>
               ))}
