@@ -12,7 +12,7 @@ const getItem = (arr: any[], index: number): any => arr[index];
 const keyExtractor = (obj: {id: string}) => obj.id;
 
 const ItemSeparatorComponent = () => (
-  <View style={tw`border-b border-gray-800`} />
+  <View style={tw`border-b border-gray-200`} />
 );
 const CellRendererComponent = ({children}: {children: ReactNode}) => (
   <View>{children}</View>

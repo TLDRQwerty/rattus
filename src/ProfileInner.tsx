@@ -7,8 +7,12 @@ import Text from './ui/Text';
 import RenderHTML from 'react-native-render-html';
 import useList from './hooks/use-list';
 import Status from './Status';
+import Pressable from './ui/Pressable';
+import {useNavigation} from '@react-navigation/native';
+import Tabs from './ui/Tabs';
 
 export default function ProfileInner({profile}: {profile: Account}) {
+  const navigation = useNavigation();
   const {width} = useWindowDimensions();
   const {Component} = useList<StatusType>({
     endpoint: `/api/v1/accounts/${profile.id}/statuses`,
@@ -60,6 +64,14 @@ export default function ProfileInner({profile}: {profile: Account}) {
               ))}
             </View>
           ) : null}
+          <Pressable
+            style={tw`flex-row justify-between w-1/2`}
+            onPress={() =>
+              navigation.navigate('FollowingAndFollowers', {id: profile.id})
+            }>
+            <Text subtext>Followers {profile.followers_count}</Text>
+            <Text subtext>Following {profile.following_count}</Text>
+          </Pressable>
         </View>
       </View>
     ),

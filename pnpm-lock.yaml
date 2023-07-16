@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@gorhom/bottom-sheet':
+    specifier: ^4.4.7
+    version: 4.4.7(@types/react-native@0.72.2)(@types/react@18.2.15)(react-native-gesture-handler@2.12.0)(react-native-reanimated@3.3.0)(react-native@0.72.3)(react@18.2.0)
   '@react-native-async-storage/async-storage':
     specifier: ^1.18.2
     version: 1.18.2(react-native@0.72.3)
@@ -77,6 +80,9 @@ dependencies:
   react-native-screens:
     specifier: ^3.21.0
     version: 3.22.0(react-native@0.72.3)(react@18.2.0)
+  react-native-scroll-bottom-sheet:
+    specifier: ^0.7.0
+    version: 0.7.0(react-native-gesture-handler@2.12.0)(react-native-reanimated@3.3.0)(react-native@0.72.3)(react@18.2.0)
   react-native-svg:
     specifier: ^13.9.0
     version: 13.9.0(react-native@0.72.3)(react@18.2.0)
@@ -1960,6 +1966,42 @@ packages:
     resolution: {integrity: sha512-k2Ty1JcVojjJFwrg/ThKi2ujJ7XNLYaFGNB/bWT9wGR+oSMJHMa5w+CUq6p/pVrKeNNgA7pCqEcjSnHVoqJQFw==}
     dev: false
 
+  /@gorhom/bottom-sheet@4.4.7(@types/react-native@0.72.2)(@types/react@18.2.15)(react-native-gesture-handler@2.12.0)(react-native-reanimated@3.3.0)(react-native@0.72.3)(react@18.2.0):
+    resolution: {integrity: sha512-ukTuTqDQi2heo68hAJsBpUQeEkdqP9REBcn47OpuvPKhdPuO1RBOOADjqXJNCnZZRcY+HqbnGPMSLFVc31zylQ==}
+    peerDependencies:
+      '@types/react': '*'
+      '@types/react-native': '*'
+      react: '*'
+      react-native: '*'
+      react-native-gesture-handler: '>=1.10.1'
+      react-native-reanimated: '>=2.2.0'
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      '@types/react-native':
+        optional: true
+    dependencies:
+      '@gorhom/portal': 1.0.14(react-native@0.72.3)(react@18.2.0)
+      '@types/react': 18.2.15
+      '@types/react-native': 0.72.2(react-native@0.72.3)
+      invariant: 2.2.4
+      react: 18.2.0
+      react-native: 0.72.3(@babel/core@7.21.0)(@babel/preset-env@7.20.2)(react@18.2.0)
+      react-native-gesture-handler: 2.12.0(react-native@0.72.3)(react@18.2.0)
+      react-native-reanimated: 3.3.0(@babel/core@7.21.0)(@babel/plugin-proposal-nullish-coalescing-operator@7.18.6)(@babel/plugin-proposal-optional-chaining@7.21.0)(@babel/plugin-transform-arrow-functions@7.20.7)(@babel/plugin-transform-shorthand-properties@7.18.6)(@babel/plugin-transform-template-literals@7.18.9)(react-native@0.72.3)(react@18.2.0)
+    dev: false
+
+  /@gorhom/portal@1.0.14(react-native@0.72.3)(react@18.2.0):
+    resolution: {integrity: sha512-MXyL4xvCjmgaORr/rtryDNFy3kU4qUbKlwtQqqsygd0xX3mhKjOLn6mQK8wfu0RkoE0pBE0nAasRoHua+/QZ7A==}
+    peerDependencies:
+      react: '*'
+      react-native: '*'
+    dependencies:
+      nanoid: 3.3.4
+      react: 18.2.0
+      react-native: 0.72.3(@babel/core@7.21.0)(@babel/preset-env@7.20.2)(react@18.2.0)
+    dev: false
+
   /@graphql-typed-document-node/core@3.2.0(graphql@15.8.0):
     resolution: {integrity: sha512-mB9oAsNCm9aM3/SOv4YtBMqZbYj10R7dkq8byBqxGY/ncFwhf2oQzMV+LCRlWoDSEBJ3COiR1yeDvMtsoOsuFQ==}
     peerDependencies:
@@ -3059,7 +3101,7 @@ packages:
     resolution: {integrity: sha512-/eEjr04Zqo7mTMszuSdrLx90+j5nWhDMMOgtnKZfAYyV3RwmlpSb7F17ilmMMxZWJY81n/JZ4e6wdhMJFpjrCg==}
     dependencies:
       '@react-native/virtualized-lists': 0.72.6(react-native@0.72.3)
-      '@types/react': 18.0.28
+      '@types/react': 18.2.15
     transitivePeerDependencies:
       - react-native
     dev: false
@@ -3069,14 +3111,6 @@ packages:
     dependencies:
       '@types/react': 18.2.15
     dev: true
-
-  /@types/react@18.0.28:
-    resolution: {integrity: sha512-RD0ivG1kEztNBdoAK7lekI9M+azSnitIn85h4iOiaLjaTrMjzslhaqCGaI4IyCJ1RljWiLCEu4jyrLLgqxBTew==}
-    dependencies:
-      '@types/prop-types': 15.7.5
-      '@types/scheduler': 0.16.2
-      csstype: 3.1.1
-    dev: false
 
   /@types/react@18.2.15:
     resolution: {integrity: sha512-oEjE7TQt1fFTFSbf8kkNuc798ahTUzn3Le67/PWjE8MAfYAD/qB7O8hSTcromLFqHCt9bcdOg5GXMokzTjJ5SA==}
@@ -8529,6 +8563,21 @@ packages:
       warn-once: 0.1.1
     dev: false
 
+  /react-native-scroll-bottom-sheet@0.7.0(react-native-gesture-handler@2.12.0)(react-native-reanimated@3.3.0)(react-native@0.72.3)(react@18.2.0):
+    resolution: {integrity: sha512-gLgGiB8roynIVcP8tw+Y+iVVCYDDVQW9ug//SX4HhM01Q0nDdRiwVgnCDnMbDQCmAFpwtJEdEs2a+Ys/7L9CIw==}
+    peerDependencies:
+      react: '*'
+      react-native: '*'
+      react-native-gesture-handler: '*'
+      react-native-reanimated: '*'
+    dependencies:
+      react: 18.2.0
+      react-native: 0.72.3(@babel/core@7.21.0)(@babel/preset-env@7.20.2)(react@18.2.0)
+      react-native-gesture-handler: 2.12.0(react-native@0.72.3)(react@18.2.0)
+      react-native-reanimated: 3.3.0(@babel/core@7.21.0)(@babel/plugin-proposal-nullish-coalescing-operator@7.18.6)(@babel/plugin-proposal-optional-chaining@7.21.0)(@babel/plugin-transform-arrow-functions@7.20.7)(@babel/plugin-transform-shorthand-properties@7.18.6)(@babel/plugin-transform-template-literals@7.18.9)(react-native@0.72.3)(react@18.2.0)
+      utility-types: 3.10.0
+    dev: false
+
   /react-native-svg@13.9.0(react-native@0.72.3)(react@18.2.0):
     resolution: {integrity: sha512-Ey18POH0dA0ob/QiwCBVrxIiwflhYuw0P0hBlOHeY4J5cdbs8ngdKHeWC/Kt9+ryP6fNoEQ1PUgPYw2Bs/rp5Q==}
     peerDependencies:
@@ -9763,6 +9812,11 @@ packages:
 
   /util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
+
+  /utility-types@3.10.0:
+    resolution: {integrity: sha512-O11mqxmi7wMKCo6HKFt5AhO4BwY3VV68YU07tgxfz8zJTIxr4BpsezN49Ffwy9j3ZpwwJp4fkRwjRzq3uWE6Rg==}
+    engines: {node: '>= 4'}
+    dev: false
 
   /utils-merge@1.0.1:
     resolution: {integrity: sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==}

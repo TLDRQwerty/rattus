@@ -8,6 +8,7 @@ import Status from '../screens/Status';
 import type {NavigatorScreenParams} from '@react-navigation/native';
 import InstancePreivew from '../screens/InstancePreview';
 import Connect from '../screens/Connect';
+import FollowingAndFollowers from '../screens/FollowingAndFollowers';
 
 const Stack = createNativeStackNavigator<RootNavigationStackParamList>();
 
@@ -27,6 +28,16 @@ export default function RootNavigation(): JSX.Element {
         component={InstancePreivew}
       />
       <Stack.Screen name="Connect" component={Connect} />
+      <Stack.Group
+        screenOptions={{
+          presentation: 'modal',
+          headerShown: false,
+        }}>
+        <Stack.Screen
+          name="FollowingAndFollowers"
+          component={FollowingAndFollowers}
+        />
+      </Stack.Group>
     </Stack.Navigator>
   );
 }
@@ -37,6 +48,7 @@ type RootNavigationStackParamList = {
   Status: {id: string};
   InstancePreview: undefined;
   Connect: {uri: string};
+  FollowingAndFollowers: {id: string};
 };
 
 export type RootNavigationStackScreenProps<
