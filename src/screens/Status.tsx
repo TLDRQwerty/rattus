@@ -1,22 +1,21 @@
 import React from 'react';
-import {
-  ActivityIndicator,
-  RefreshControl,
-  VirtualizedList,
-  View,
-} from 'react-native';
+import {View, VirtualizedList} from 'react-native';
+import type {RootNavigationStackScreenProps} from '../navigation';
 import useAuthQuery from '../hooks/use-auth-query';
-import type {RootDrawerScreenProps} from '../navigation/DrawerNavigator';
-import tw from '../tailwind';
-import type {Status as StatusType, Context as ContextType} from '../types';
-import Status from '../Status';
+import Loading from '../ui/Loading';
 import Text from '../ui/Text';
+import type {Context as ContextType, Status as StatusType} from '../types';
+import StatusComponent from '../Status';
+import tw from '../tailwind';
+import {RefreshControl} from 'react-native-gesture-handler';
 
 const getItemCount = (arr: unknown[]) => arr.length;
 const getItem = (arr: any[], index: number): any => arr[index];
 const keyExtractor = (obj: {id: string}) => obj.id;
 
-export default function Context({route}: RootDrawerScreenProps<'Status'>) {
+export default function Status({
+  route,
+}: RootNavigationStackScreenProps<'Status'>): JSX.Element {
   const {id} = route.params;
   const {data, isLoading, isError, error, refetch, isRefetching} =
     useAuthQuery<ContextType>(
@@ -28,7 +27,7 @@ export default function Context({route}: RootDrawerScreenProps<'Status'>) {
     return <FetchedStatus id={id} />;
   };
   if (isLoading || data == null) {
-    return <ActivityIndicator />;
+    return <Loading />;
   }
   if (isError) {
     return <Text>{String(error)}</Text>;
@@ -39,7 +38,7 @@ export default function Context({route}: RootDrawerScreenProps<'Status'>) {
       data={data.descendants}
       getItemCount={getItemCount}
       getItem={getItem}
-      renderItem={item => <Status {...item.item} />}
+      renderItem={item => <StatusComponent {...item.item} />}
       keyExtractor={keyExtractor}
       contentContainerStyle={tw`gap-4`}
       refreshControl={
@@ -62,7 +61,7 @@ function FetchedStatus({id}: {id: string}) {
   );
 
   if (status === 'loading') {
-    return <ActivityIndicator />;
+    return <Loading />;
   }
 
   if (status === 'error') {
@@ -70,8 +69,8 @@ function FetchedStatus({id}: {id: string}) {
   }
 
   return (
-    <View style={tw`border-b border-gray-400`}>
-      <Status {...data} />
+    <View style={tw`border-b border-gray-400 px-4 py-2`}>
+      <StatusComponent {...data} />
     </View>
   );
 }

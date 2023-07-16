@@ -5,7 +5,6 @@ import Text from './Text';
 import Image from './Image';
 import tw from '../tailwind';
 import Pressable from './Pressable';
-import {PROFILE_TAB} from '../screens/profile/ProfileNavigator';
 
 interface Props {
   username: string;
@@ -23,14 +22,10 @@ export default function Account({
   const navigation = useNavigation();
   return (
     <Pressable
-      style={tw`flex-row flex-1 gap-2 items-center min-h-8`}
+      style={tw`flex-row gap-2 items-center min-h-8`}
       onPress={() =>
-        navigation.navigate('Root', {
-          screen: 'ProfileOverview',
-          params: {
-            id,
-            tab: PROFILE_TAB.POSTS,
-          },
+        navigation.navigate('Profile', {
+          id,
         })
       }>
       <Image source={{uri: avatarUri}} style={tw`w-8 h-8 rounded-lg`} />

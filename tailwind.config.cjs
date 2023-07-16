@@ -1,7 +1,7 @@
 import colors from 'tailwindcss/colors';
 
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   content: [],
   theme: {
     extend: {
@@ -16,6 +16,8 @@ module.exports = {
         yellow: colors.amber,
         pink: colors.fuchsia,
         primary: colors.rose,
+        background: colors.black,
+        text: colors.white,
       },
     },
   },

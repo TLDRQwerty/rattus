@@ -43,13 +43,9 @@ export default function Status({
   }
   return (
     <Pressable
-      style={tw`px-2 py-4`}
       onPress={() =>
-        navigation.navigate('Root', {
-          screen: 'Status',
-          params: {
-            id,
-          },
+        navigation.navigate('Status', {
+          id,
         })
       }>
       <View style={tw`w-full justify-between h-8`}>
@@ -84,13 +80,11 @@ export default function Status({
           <Text>{replies_count}</Text>
         </View>
         <View style={tw`flex-row items-center`}>
-          <Repeat style={tw.style(reblogged && 'text-violet-600')} />
+          <Repeat style={tw.style(reblogged && 'text-primary-600')} />
           <Text>{reblogs_count}</Text>
         </View>
         <View style={tw`flex-row items-center`}>
-          <Heart
-            style={tw.style(favourited && 'bg-violet-200 text-violet-600')}
-          />
+          <Heart style={tw.style(favourited && 'text-primary-600')} />
           <Text>{favourites_count}</Text>
         </View>
       </View>

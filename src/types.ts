@@ -222,5 +222,18 @@ export interface Notification {
   created_at: string;
   account: Account;
   status: Status | null;
-  report: any | null;
+  report: Report | null;
+}
+
+export interface Report {
+  id: string;
+  action_taken: boolean;
+  action_taken_at: string | null;
+  category: 'spam' | 'violation' | 'other';
+  comment: string;
+  forwarded: boolean;
+  created_at: string;
+  status_ids: string[] | null;
+  rules_id: string[];
+  target_account: Account;
 }

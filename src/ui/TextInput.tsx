@@ -5,9 +5,10 @@ import tw from '../tailwind';
 
 type Props = TextInputProps;
 
-export default function TextInput({style, ...props}: Props) {
+export default function TextInput({style, cursorColor, ...props}: Props) {
   return (
     <RNTextInput
+      cursorColor={tw`text-primary-400`?.color ?? cursorColor}
       style={StyleSheet.compose(
         tw`border rounded bg-gray-200 text-black h-10`,
         style,

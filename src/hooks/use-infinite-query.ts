@@ -79,6 +79,7 @@ export default function useInfiniteQuery<
     TError,
     {data: TData; nextPage: string | null; prevPage: string | null},
     TQueryKey
+    // @ts-expect-error idk
   >({
     queryKey: [...key, instance, accessToken],
     queryFn: async ({pageParam}) => {

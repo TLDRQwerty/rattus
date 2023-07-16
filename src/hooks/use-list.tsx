@@ -1,17 +1,18 @@
 import type {ReactNode} from 'react';
 import React, {useCallback, useMemo} from 'react';
-import type {VirtualizedListProps} from 'react-native';
+import type {ListRenderItem, VirtualizedListProps} from 'react-native';
 import {ActivityIndicator, Text, View, VirtualizedList} from 'react-native';
 import {RefreshControl} from 'react-native-gesture-handler';
 import tw from '../tailwind';
 import useInfiniteQuery from './use-infinite-query';
+import Loading from '../ui/Loading';
 
 const getItemCount = (arr: unknown[]) => arr.length;
 const getItem = (arr: any[], index: number): any => arr[index];
 const keyExtractor = (obj: {id: string}) => obj.id;
 
 const ItemSeparatorComponent = () => (
-  <View style={tw`border-b border-gray-200`} />
+  <View style={tw`border-b border-gray-800`} />
 );
 const CellRendererComponent = ({children}: {children: ReactNode}) => (
   <View>{children}</View>
@@ -21,9 +22,12 @@ export default function useList<TType extends {id: string}>({
   endpoint,
   renderItem,
   ListFooterComponent,
+  enabled,
   ...rest
 }: {
   endpoint: TemplateStringsArray | string;
+  data?: RequestInit;
+  enabled?: boolean;
 } & VirtualizedListProps<TType>) {
   const {
     data,
@@ -36,6 +40,10 @@ export default function useList<TType extends {id: string}>({
   } = useInfiniteQuery<TType[]>(
     Array.isArray(endpoint) ? endpoint : [endpoint],
     typeof endpoint === 'string' ? endpoint : endpoint.join(),
+    {},
+    {
+      enabled,
+    },
   );
 
   const flatData = useMemo(() => data?.pages.flatMap(d => d.data), [data]);
@@ -59,9 +67,17 @@ export default function useList<TType extends {id: string}>({
     return null;
   }, [isFetchingNextPage]);
 
+  const renderItemWrapper: ListRenderItem<TType> = item => {
+    if (!renderItem) {
+      return <View />;
+    }
+
+    return <View style={tw`px-4 py-2`}>{renderItem(item)}</View>;
+  };
+
   let Component = null;
   if (status === 'loading' && data == null) {
-    Component = <ActivityIndicator />;
+    Component = <Loading />;
   }
   if (status === 'error') {
     Component = <Text>{String(error)}</Text>;
@@ -71,7 +87,7 @@ export default function useList<TType extends {id: string}>({
     Component = (
       <VirtualizedList<TType>
         data={flatData}
-        renderItem={renderItem}
+        renderItem={renderItemWrapper}
         keyExtractor={keyExtractor}
         getItemCount={getItemCount}
         getItem={getItem}
@@ -86,6 +102,10 @@ export default function useList<TType extends {id: string}>({
         {...rest}
       />
     );
+  }
+
+  if (!Component) {
+    Component = <Loading />;
   }
 
   return {
