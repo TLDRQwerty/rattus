@@ -58,13 +58,13 @@ export default function Status({
           fullUsername={account.acct}
           avatarUri={account.avatar_static}
         />
-        <View>
-          {visibility !== VISIBILITY.PUBLIC && (
-            <Text subtext style={tw`capitalize`}>
-              {visibility}
-            </Text>
-          )}
-        </View>
+      </View>
+      <View>
+        {visibility !== VISIBILITY.PUBLIC && (
+          <Text subtext style={tw`capitalize`}>
+            {visibility}
+          </Text>
+        )}
       </View>
       <RenderHTML contentWidth={width} source={{html: content}} />
       {media_attachments?.length !== 0

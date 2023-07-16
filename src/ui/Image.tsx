@@ -38,7 +38,7 @@ export default function Image({children, ...rest}: Props) {
         onRequestClose={() => setOpen(false)}
         onDismiss={() => setOpen(false)}>
         <View style={tw`w-screen h-screen bg-gray-600/25`}>
-          <View style={tw`m-auto`}>
+          <View style={tw`m-auto items-center`}>
             <RNImage
               {...rest}
               style={Object.assign({}, rest.style, {
