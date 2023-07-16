@@ -24,7 +24,8 @@ function renderIcon(icon: (props: Icons.Props) => React.JSX.Element) {
 export default function BottomTabNavigator(): JSX.Element {
   const accessToken = useUserStore(s => s.accessToken);
   return (
-    <Tab.Navigator screenOptions={{tabBarShowLabel: false}}>
+    <Tab.Navigator
+      screenOptions={{tabBarShowLabel: false, tabBarHideOnKeyboard: true}}>
       <Tab.Screen
         options={{tabBarIcon: renderIcon(Icons.Home)}}
         name="Home"
