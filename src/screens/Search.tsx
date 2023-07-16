@@ -78,7 +78,7 @@ export default function Search(): JSX.Element {
               ListEmptyComponent={
                 <View>
                   {debouncedSearch != null && isLoading && <Loading />}
-                  <Text>No results found</Text>
+                  {!isLoading && <Text>No results found</Text>}
                 </View>
               }
             />
@@ -92,7 +92,7 @@ export default function Search(): JSX.Element {
               ListEmptyComponent={
                 <View>
                   {debouncedSearch != null && isLoading && <Loading />}
-                  <Text>No results found</Text>
+                  {!isLoading && <Text>No results found</Text>}
                 </View>
               }
             />
@@ -106,7 +106,7 @@ export default function Search(): JSX.Element {
               ListEmptyComponent={
                 <View>
                   {debouncedSearch != null && isLoading && <Loading />}
-                  <Text>No results found</Text>
+                  {!isLoading && <Text>No results found</Text>}
                 </View>
               }
             />
