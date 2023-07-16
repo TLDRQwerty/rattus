@@ -122,3 +122,11 @@ export const SquarePlus = createIcon(
     <Path d="M12 9l0 6" />
   </>,
 );
+
+export const Selector = createIcon(
+  <>
+    <Path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <Path d="M8 9l4 -4l4 4" />
+    <Path d="M16 15l-4 4l-4 -4" />
+  </>,
+);

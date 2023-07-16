@@ -1,7 +1,7 @@
 import type {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import React from 'react';
-import Public from '../screens/Public';
+import Home from '../screens/Home';
 import Me from '../screens/Me';
 import Search from '../screens/Search';
 import * as Icons from '../ui/Icons';
@@ -27,8 +27,8 @@ export default function BottomTabNavigator(): JSX.Element {
     <Tab.Navigator screenOptions={{tabBarShowLabel: false}}>
       <Tab.Screen
         options={{tabBarIcon: renderIcon(Icons.Home)}}
-        name="Public"
-        component={Public}
+        name="Home"
+        component={Home}
       />
       <Tab.Screen
         options={{tabBarIcon: renderIcon(Icons.Search)}}
@@ -59,7 +59,7 @@ export default function BottomTabNavigator(): JSX.Element {
 }
 
 export type RootBottomTabParamList = {
-  Public: undefined;
+  Home: undefined;
   Search: undefined;
   Create: undefined;
   Notifications: undefined;
