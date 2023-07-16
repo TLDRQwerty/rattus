@@ -47,6 +47,9 @@ dependencies:
   expo:
     specifier: ^49.0.3
     version: 49.0.3(@babel/core@7.21.0)
+  expo-image-picker:
+    specifier: ~14.3.1
+    version: 14.3.1(expo@49.0.3)
   jsc-android:
     specifier: ^250231.0.0
     version: 250231.0.0
@@ -5126,6 +5129,23 @@ packages:
     dependencies:
       expo: 49.0.3(@babel/core@7.21.0)
       fontfaceobserver: 2.3.0
+    dev: false
+
+  /expo-image-loader@4.3.0(expo@49.0.3):
+    resolution: {integrity: sha512-2kqJIO+oYM8J3GbvTUHLqTSpt1dLpOn/X0eB4U4RTuzz/faj8l/TyQELsMBLlGAkweNUuG9LqznbaBz+WuSFEw==}
+    peerDependencies:
+      expo: '*'
+    dependencies:
+      expo: 49.0.3(@babel/core@7.21.0)
+    dev: false
+
+  /expo-image-picker@14.3.1(expo@49.0.3):
+    resolution: {integrity: sha512-05qyPqNtvvUt8fhgVQcsAdLX5iohKIR+Wr/a1JQ57DNWqcu9OucvjhSTKEDzx4wYqHI4ZuPJDwKx0W52r2GQbQ==}
+    peerDependencies:
+      expo: '*'
+    dependencies:
+      expo: 49.0.3(@babel/core@7.21.0)
+      expo-image-loader: 4.3.0(expo@49.0.3)
     dev: false
 
   /expo-keep-awake@12.3.0(expo@49.0.3):

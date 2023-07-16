@@ -1,23 +1,31 @@
 {
-	"expo": {
-		"name": "Ratttus",
-		"slug": "ratuts",
-		"owner": "spacedrive",
-		"version": "0.0.1",
-		"orientation": "portrait",
-		"jsEngine": "hermes",
-		"scheme": "ratuts",
-		"platforms": ["ios", "android"],
-		"userInterfaceStyle": "automatic",
-		"updates": {
-			"enabled": false,
-			"fallbackToCacheTimeout": 0
-		},
-		"assetBundlePatterns": ["**/*"],
-		"ios": {
-			"supportsTablet": false
-		},
-		"android": {},
-		"privacy": "hidden"
-	}
+  "expo": {
+    "name": "Ratttus",
+    "slug": "ratuts",
+    "owner": "tldrqwerty",
+    "version": "0.0.1",
+    "orientation": "portrait",
+    "jsEngine": "hermes",
+    "scheme": "ratuts",
+    "platforms": ["ios", "android"],
+    "userInterfaceStyle": "automatic",
+    "updates": {
+      "enabled": false,
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": false
+    },
+    "android": {},
+    "privacy": "hidden",
+    "plugins": [
+       [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos"
+        }
+      ]
+    ]
+  }
 }
