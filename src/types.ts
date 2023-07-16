@@ -237,3 +237,20 @@ export interface Report {
   rules_id: string[];
   target_account: Account;
 }
+
+interface Tag {
+  name: string;
+  url: string;
+  history: {
+    day: string;
+    users: string[];
+    accounts: string[];
+  }[];
+  following?: boolean;
+}
+
+export interface Search {
+  accounts: Account[];
+  statuses: Status[];
+  hashtags: Tag[];
+}
