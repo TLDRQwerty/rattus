@@ -1,12 +1,12 @@
 import {useNavigation} from '@react-navigation/native';
-import React from 'react';
+import React, {useState} from 'react';
 import {View, useWindowDimensions} from 'react-native';
 import RenderHTML from 'react-native-render-html';
 import tw from './tailwind';
 import type {Status as StatusType} from './types';
 import {VISIBILITY} from './types';
 import Account from './ui/Account';
-import {Heart, MessageCircle, Repeat} from './ui/Icons';
+import {CornerDownRight, Heart, MessageCircle, Repeat} from './ui/Icons';
 import Image from './ui/Image';
 import Pressable from './ui/Pressable';
 import Text from './ui/Text';
@@ -37,7 +37,10 @@ export default function Status({
           fullUsername={account.acct}
           avatarUri={account.avatar_static}
         />
-        <Status {...reblog} />
+        <View style={tw`flex-row`}>
+          <CornerDownRight style={tw`text-primary-400`} />
+          <Status {...reblog} />
+        </View>
       </View>
     );
   }
@@ -57,21 +60,24 @@ export default function Status({
         />
         <View>
           {visibility !== VISIBILITY.PUBLIC && (
-            <Text style={tw`capitalize text-gray-400`}>{visibility}</Text>
+            <Text subtext style={tw`capitalize`}>
+              {visibility}
+            </Text>
           )}
         </View>
       </View>
       <RenderHTML contentWidth={width} source={{html: content}} />
       {media_attachments?.length !== 0
         ? media_attachments?.map(attachment => (
-            <View key={attachment.id}>
-              <Image
-                style={tw`w-full h-42`}
-                resizeMode="contain"
-                source={{uri: attachment.preview_url}}
-              />
-              <Text>{attachment.description}</Text>
-            </View>
+            <Image
+              key={attachment.id}
+              style={tw`w-full h-42`}
+              resizeMode="contain"
+              source={{uri: attachment.preview_url}}>
+              <View style={tw`bg-gray-200 rounded p-4`}>
+                <Text subtext>{attachment.description}</Text>
+              </View>
+            </Image>
           ))
         : null}
       <View style={tw`flex-row justify-between`}>

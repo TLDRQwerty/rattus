@@ -130,3 +130,20 @@ export const Selector = createIcon(
     <Path d="M16 15l-4 4l-4 -4" />
   </>,
 );
+
+export const CornerDownRight = createIcon(
+  <>
+    <Path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <Path d="M6 6v6a3 3 0 0 0 3 3h10l-4 -4m0 8l4 -4" />
+  </>,
+);
+
+export const Photo = createIcon(
+  <>
+    <Path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <Path d="M15 8h.01" />
+    <Path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z" />
+    <Path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5" />
+    <Path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3" />
+  </>,
+);

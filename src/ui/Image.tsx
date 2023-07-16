@@ -1,3 +1,4 @@
+import type {ReactNode} from 'react';
 import React, {useLayoutEffect, useState} from 'react';
 import type {ImageProps} from 'react-native';
 import {
@@ -10,9 +11,11 @@ import {
 import tw from '../tailwind';
 import Pressable from './Pressable';
 
-type Props = ImageProps;
+interface Props extends ImageProps {
+  children?: ReactNode;
+}
 
-export default function Image({...rest}: Props) {
+export default function Image({children, ...rest}: Props) {
   const [open, setOpen] = useState(false);
   const [size, setSize] = useState<null | {width: number; height: number}>(
     null,
@@ -51,6 +54,7 @@ export default function Image({...rest}: Props) {
               })}
               resizeMode="contain"
             />
+            {children}
             <Pressable
               style={tw`mt-16 rounded bg-gray-900 p-2 mx-8`}
               onPress={() => setOpen(false)}>

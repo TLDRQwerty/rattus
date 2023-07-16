@@ -1,6 +1,7 @@
-import React from 'react';
-import {View} from 'react-native';
+import React, {useState} from 'react';
+import RichTextEditor from '../ui/RichTextEditor';
 
 export default function Create(): JSX.Element {
-  return <View />;
+  const [value, setValue] = useState('');
+  return <RichTextEditor value={value} onChangeText={setValue} />;
 }

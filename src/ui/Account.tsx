@@ -31,7 +31,7 @@ export default function Account({
       <Image source={{uri: avatarUri}} style={tw`w-8 h-8 rounded-lg`} />
       <View>
         <Text>{username}</Text>
-        <Text>{fullUsername}</Text>
+        <Text subtext>{fullUsername}</Text>
       </View>
     </Pressable>
   );

@@ -9,7 +9,7 @@ const text = cva('', {
   variants: {
     subtext: {
       false: 'text-black',
-      true: 'text-gray-400',
+      true: 'text-gray-600',
     },
   },
   defaultVariants: {

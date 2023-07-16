@@ -14,8 +14,8 @@ function TabsInner({children}: {children: ReactNode}): JSX.Element {
         {state.tabs.map((tab, i) => (
           <Pressable
             key={i}
-            style={tw.style('flex-1 items-center py-2', {
-              'bg-gray-400/25': i === state.index,
+            style={tw.style('flex-1 items-center py-2 bg-gray-400/25', {
+              'bg-white': i === state.index,
             })}
             onPress={() => {
               dispatch({type: ActionTypes.SetIndex, index: i});
