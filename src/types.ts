@@ -238,12 +238,12 @@ export interface Report {
   target_account: Account;
 }
 
-interface Tag {
+export interface Tag {
   name: string;
   url: string;
   history: {
     day: string;
-    users: string[];
+    uses: string[];
     accounts: string[];
   }[];
   following?: boolean;
