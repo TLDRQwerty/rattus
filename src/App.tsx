@@ -59,12 +59,14 @@ export default function App() {
     return () => subscription.remove();
   }, []);
   return (
-    <NavigationContainer linking={linking} ref={navigationRef}>
-      <GestureHandlerRootView style={tw`flex-1`}>
-        <QueryClientProvider client={queryClient}>
-          <Navigator />
-        </QueryClientProvider>
-      </GestureHandlerRootView>
-    </NavigationContainer>
+    <React.StrictMode>
+      <NavigationContainer linking={linking} ref={navigationRef}>
+        <GestureHandlerRootView style={tw`flex-1`}>
+          <QueryClientProvider client={queryClient}>
+            <Navigator />
+          </QueryClientProvider>
+        </GestureHandlerRootView>
+      </NavigationContainer>
+    </React.StrictMode>
   );
 }
