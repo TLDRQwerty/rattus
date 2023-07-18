@@ -1,0 +1,10 @@
+diff --git a/android/gradle.properties b/android/gradle.properties
+index c17e0668f783ecd9d0560239f96314890156fe79..15b5bd173610b28a5502ebdf0b59700a76141c6b 100644
+--- a/android/gradle.properties
++++ b/android/gradle.properties
+@@ -1,4 +1,4 @@
+-ReactNativeWebView_kotlinVersion=1.6.0
++ReactNativeWebView_kotlinVersion=1.6.20
+ ReactNativeWebView_webkitVersion=1.4.0
+ ReactNativeWebView_compileSdkVersion=31
+ ReactNativeWebView_targetSdkVersion=31
