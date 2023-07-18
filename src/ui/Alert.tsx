@@ -7,7 +7,7 @@ import React, {
   useReducer,
 } from 'react';
 import {match} from '../utils/match';
-import {Modal, View} from 'react-native';
+import {Modal, Pressable, View} from 'react-native';
 import tw from '../tailwind';
 
 interface AlertProps {
@@ -37,7 +37,14 @@ const Alert = forwardRef<RefHandle, AlertProps>(function Alert(
   return (
     <AlertContext.Provider value={{state, dispatch}}>
       {state.visible && (
-        <Modal transparent style={tw`w-screen h-screen`}>
+        <Modal
+          transparent
+          style={tw`w-screen h-screen`}
+          onDismiss={() => {
+            dispatch({
+              type: ActionTypes.Close,
+            });
+          }}>
           <View style={tw`bg-white rounded m-auto`}>{children}</View>
         </Modal>
       )}
