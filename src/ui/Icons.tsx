@@ -165,3 +165,33 @@ export const CameraRotate = createIcon(
     <Path d="M10 13h-2v-2" />
   </>,
 );
+
+export const CameraFocus = createIcon(
+  <>
+    <Path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <Path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+    <Path d="M4 8v-2a2 2 0 0 1 2 -2h2" />
+    <Path d="M4 16v2a2 2 0 0 0 2 2h2" />
+    <Path d="M16 4h2a2 2 0 0 1 2 2v2" />
+    <Path d="M16 20h2a2 2 0 0 0 2 -2v-2" />
+  </>,
+);
+
+export const CameraCancel = createIcon(
+  <>
+    <Path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <Path d="M12 20h-7a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2h1a2 2 0 0 0 2 -2a1 1 0 0 1 1 -1h6a1 1 0 0 1 1 1a2 2 0 0 0 2 2h1a2 2 0 0 1 2 2v3.5" />
+    <Path d="M14.984 13.307a3 3 0 1 0 -2.32 2.62" />
+    <Path d="M19 19m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+    <Path d="M17 21l4 -4" />
+  </>,
+);
+
+export const CameraBolt = createIcon(
+  <>
+    <Path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <Path d="M13 20h-8a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2h1a2 2 0 0 0 2 -2a1 1 0 0 1 1 -1h6a1 1 0 0 1 1 1a2 2 0 0 0 2 2h1a2 2 0 0 1 2 2v3.5" />
+    <Path d="M9 13a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
+    <Path d="M19 16l-2 3h4l-2 3" />
+  </>,
+);

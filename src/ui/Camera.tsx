@@ -21,7 +21,7 @@ import {useIsFocused} from '@react-navigation/native';
 import {useAppState} from '../hooks/use-app-state';
 import tw from '../tailwind';
 import Pressable from './Pressable';
-import {CameraRotate} from './Icons';
+import {CameraBolt, CameraCancel, CameraRotate} from './Icons';
 
 const ReanimatedCamera = Reanimated.createAnimatedComponent(RootCamera);
 Reanimated.addWhitelistedNativeProps({
@@ -39,6 +39,8 @@ export default function Camera(): JSX.Element {
 
   const devices = useCameraDevices();
   const device = devices[cameraPosition];
+
+  const [flash, setFlash] = useState<undefined | boolean>(device?.hasFlash);
 
   const zoom = useSharedValue(0);
 
@@ -91,6 +93,10 @@ export default function Camera(): JSX.Element {
     setCameraPosition(p => (p === 'back' ? 'front' : 'back'));
   }, []);
 
+  const onFlashPressed = useCallback(() => {
+    setFlash(f => !f);
+  }, []);
+
   const onDoubleTap = useCallback(() => {
     onFlipCameraPressed();
   }, [onFlipCameraPressed]);
@@ -120,6 +126,11 @@ export default function Camera(): JSX.Element {
         <Pressable onPress={onFlipCameraPressed}>
           <CameraRotate style={tw`w-12 h-12`} />
         </Pressable>
+        {flash != null && (
+          <Pressable onPress={onFlashPressed}>
+            {flash ? <CameraBolt /> : <CameraCancel />}
+          </Pressable>
+        )}
       </View>
     </View>
   );
