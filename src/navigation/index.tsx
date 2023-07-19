@@ -9,6 +9,7 @@ import type {NavigatorScreenParams} from '@react-navigation/native';
 import InstancePreivew from '../screens/InstancePreview';
 import Connect from '../screens/Connect';
 import FollowingAndFollowers from '../screens/FollowingAndFollowers';
+import Camera from '../screens/Camera';
 
 const Stack = createNativeStackNavigator<RootNavigationStackParamList>();
 
@@ -37,6 +38,7 @@ export default function RootNavigation(): JSX.Element {
           name="FollowingAndFollowers"
           component={FollowingAndFollowers}
         />
+        <Stack.Screen name="Camera" component={Camera} />
       </Stack.Group>
     </Stack.Navigator>
   );
@@ -49,6 +51,7 @@ type RootNavigationStackParamList = {
   InstancePreview: undefined;
   Connect: {uri: string};
   FollowingAndFollowers: {id: string};
+  Camera: undefined;
 };
 
 export type RootNavigationStackScreenProps<
