@@ -21,6 +21,9 @@ export default function RichTextEditor({...rest}: Props): JSX.Element {
   const [status, requestPermission] = ImagePicker.useCameraPermissions();
   const alertRef = useRef<RefHandle>();
 
+  const [selectedAttachemnt, setSelectedAttachment] =
+    useState<null | ImagePicker.ImagePickerAsset>(null);
+
   const addPhoto = async () => {
     if (!status?.granted) {
       await requestPermission();
@@ -46,11 +49,20 @@ export default function RichTextEditor({...rest}: Props): JSX.Element {
       <TextInput multiline {...rest} />
       <View style={tw`flex-row`}>
         {attachments.map(attachment => (
-          <Image
-            style={tw`w-24 h-24`}
-            source={{uri: attachment.uri}}
-            key={attachment.assetId}
-          />
+          <Pressable
+            onLongPress={() => {
+              console.log('did this work')
+              if (alertRef.current) {
+                setSelectedAttachment(attachment);
+                alertRef.current.show();
+              }
+            }}>
+            <Image
+              style={tw`w-24 h-24`}
+              source={{uri: attachment.uri}}
+              key={attachment.assetId}
+            />
+          </Pressable>
         ))}
       </View>
       <View style={tw`flex-row gap-2`}>
@@ -65,10 +77,19 @@ export default function RichTextEditor({...rest}: Props): JSX.Element {
         </Pressable>
       </View>
       <Alert ref={alertRef}>
-        <View>
-          <Text>This is some content</Text>
-          <Pressable onPress={() => alertRef.current?.hide()}>
-            <Text>Close</Text>
+        <Text style={tw`text-lg`}>Delete Attachment?</Text>
+        {selectedAttachemnt && (
+          <Image style={tw`w-24 h-24`} source={{uri: selectedAttachemnt.uri}} />
+        )}
+        <View style={tw`flex-row justify-end gap-8 mt-auto`}>
+          <Pressable onPress={alertRef.current?.hide}>
+            <Text>Cancel</Text>
+          </Pressable>
+          <Pressable
+            onPress={() => {
+              alertRef.current?.hide();
+            }}>
+            <Text>Delete</Text>
           </Pressable>
         </View>
       </Alert>

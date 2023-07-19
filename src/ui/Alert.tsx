@@ -36,18 +36,20 @@ const Alert = forwardRef<RefHandle, AlertProps>(function Alert(
 
   return (
     <AlertContext.Provider value={{state, dispatch}}>
-      {state.visible && (
-        <Modal
-          transparent
-          style={tw`w-screen h-screen`}
-          onDismiss={() => {
-            dispatch({
-              type: ActionTypes.Close,
-            });
-          }}>
-          <View style={tw`bg-white rounded m-auto`}>{children}</View>
-        </Modal>
-      )}
+      <Modal
+        transparent
+        visible={state.visible}
+        onDismiss={() => {
+          dispatch({
+            type: ActionTypes.Close,
+          });
+        }}>
+        <View
+          style={tw`z-1 p-4 min-h-[15%] min-w-[25%] bg-white rounded-xl m-auto`}>
+          {children}
+        </View>
+        <View style={tw`absolute inset-0 bg-gray-800/25`} />
+      </Modal>
     </AlertContext.Provider>
   );
 });

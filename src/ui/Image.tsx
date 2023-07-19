@@ -12,10 +12,11 @@ import tw from '../tailwind';
 import Pressable from './Pressable';
 
 interface Props extends ImageProps {
+  disableModal?: boolean;
   children?: ReactNode;
 }
 
-export default function Image({children, ...rest}: Props) {
+export default function Image({disableModal, children, ...rest}: Props) {
   const [open, setOpen] = useState(false);
   const [size, setSize] = useState<null | {width: number; height: number}>(
     null,
@@ -28,7 +29,7 @@ export default function Image({children, ...rest}: Props) {
   }, [rest.source]);
   return (
     <>
-      <Pressable onPress={() => setOpen(true)}>
+      <Pressable onPress={disableModal ? undefined : () => setOpen(true)}>
         <RNImage {...rest} />
       </Pressable>
       <Modal
