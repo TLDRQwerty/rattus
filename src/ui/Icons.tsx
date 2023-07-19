@@ -195,3 +195,21 @@ export const CameraBolt = createIcon(
     <Path d="M19 16l-2 3h4l-2 3" />
   </>,
 );
+
+export const Menu = createIcon(
+  <>
+    <Path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <Path d="M4 6l16 0" />
+    <Path d="M4 12l16 0" />
+    <Path d="M4 18l16 0" />
+  </>,
+);
+
+export const Logout = createIcon(
+  <>
+    <Path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <Path d="M10 8v-2a2 2 0 0 1 2 -2h7a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-2" />
+    <Path d="M15 12h-12l3 -3" />
+    <Path d="M6 15l-3 -3" />
+  </>,
+);

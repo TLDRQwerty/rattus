@@ -9,6 +9,8 @@ import tw from '../tailwind';
 import Create from '../screens/Create';
 import Notifications from '../screens/Notifications';
 import {useUserStore} from '../stores/use-user';
+import Pressable from '../ui/Pressable';
+import {useNavigation} from '@react-navigation/native';
 
 const Tab = createBottomTabNavigator<RootBottomTabParamList>();
 
@@ -23,6 +25,14 @@ function renderIcon(icon: (props: Icons.Props) => React.JSX.Element) {
 
 export default function BottomTabNavigator(): JSX.Element {
   const accessToken = useUserStore(s => s.accessToken);
+  const navigation = useNavigation();
+
+  const settingsNavigation = () => (
+    <Pressable onPress={() => navigation.navigate('Settings')}>
+      <Icons.Menu />
+    </Pressable>
+  );
+
   return (
     <Tab.Navigator
       screenOptions={{tabBarShowLabel: false, tabBarHideOnKeyboard: true}}>
@@ -51,7 +61,10 @@ export default function BottomTabNavigator(): JSX.Element {
         />
       )}
       <Tab.Screen
-        options={{tabBarIcon: renderIcon(Icons.Profile)}}
+        options={{
+          tabBarIcon: renderIcon(Icons.Profile),
+          headerRight: settingsNavigation,
+        }}
         name="Me"
         component={Me}
       />

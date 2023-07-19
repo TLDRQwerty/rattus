@@ -10,6 +10,7 @@ import InstancePreivew from '../screens/InstancePreview';
 import Connect from '../screens/Connect';
 import FollowingAndFollowers from '../screens/FollowingAndFollowers';
 import Camera from '../screens/Camera';
+import Settings from '../screens/Settings';
 
 const Stack = createNativeStackNavigator<RootNavigationStackParamList>();
 
@@ -29,6 +30,7 @@ export default function RootNavigation(): JSX.Element {
         component={InstancePreivew}
       />
       <Stack.Screen name="Connect" component={Connect} />
+      <Stack.Screen name="Settings" component={Settings} />
       <Stack.Group
         screenOptions={{
           presentation: 'modal',
@@ -52,6 +54,7 @@ type RootNavigationStackParamList = {
   Connect: {uri: string};
   FollowingAndFollowers: {id: string};
   Camera: undefined;
+  Settings: undefined;
 };
 
 export type RootNavigationStackScreenProps<
