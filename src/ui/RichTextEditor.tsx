@@ -10,6 +10,7 @@ import type {RefHandle} from './Alert';
 import Alert from './Alert';
 import Text from './Text';
 import {useNavigation} from '@react-navigation/native';
+import useKeyboard from '../hooks/use-keyboard';
 
 type Props = TextInputProps;
 
@@ -51,7 +52,7 @@ export default function RichTextEditor({...rest}: Props): JSX.Element {
         {attachments.map(attachment => (
           <Pressable
             onLongPress={() => {
-              console.log('did this work')
+              console.log('did this work');
               if (alertRef.current) {
                 setSelectedAttachment(attachment);
                 alertRef.current.show();

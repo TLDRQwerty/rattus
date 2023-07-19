@@ -46,6 +46,7 @@ export default function Status({
   }
   return (
     <Pressable
+      style={tw`px-2`}
       onPress={() =>
         navigation.navigate('Status', {
           id,
