@@ -20,9 +20,11 @@ export default function ProfileInner({profile}: {profile: Account}) {
       <View>
         <View style={tw`w-full h-32 relative`}>
           <View style={tw`absolute w-full`}>
-            {profile.header && (
-              <Image source={{uri: profile.header}} style={tw`w-full h-24`} />
-            )}
+            {profile.header &&
+              profile.header !==
+                'https://social.lol/headers/original/missing.png' && (
+                <Image source={{uri: profile.header}} style={tw`w-full h-24`} />
+              )}
           </View>
           <View style={tw`absolute bottom-0 left-[5%]`}>
             <Image

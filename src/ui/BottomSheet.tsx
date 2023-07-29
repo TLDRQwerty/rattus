@@ -3,6 +3,7 @@ import RootBottomSheet from '@gorhom/bottom-sheet';
 import type {
   BottomSheetHandleProps,
   BottomSheetProps,
+  BottomSheetBackdropProps,
 } from '@gorhom/bottom-sheet';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import tw from '../tailwind';
@@ -19,7 +20,7 @@ import {toRad} from 'react-native-redash';
 type Props = BottomSheetProps;
 
 export default forwardRef<RootBottomSheet, Props>(function BottomSheet(
-  {children, enablePanDownToClose, ...rest},
+  {children, enablePanDownToClose, style, ...rest},
   ref,
 ): JSX.Element {
   return (
@@ -27,6 +28,8 @@ export default forwardRef<RootBottomSheet, Props>(function BottomSheet(
       ref={ref}
       enablePanDownToClose={enablePanDownToClose ?? true}
       handleComponent={Handle}
+      backdropComponent={Backdrop}
+      style={StyleSheet.compose(tw`shadow-xl`, style)}
       {...rest}>
       <GestureHandlerRootView style={tw`flex-1`}>
         {typeof children === 'function' ? children() : children}
@@ -34,6 +37,32 @@ export default forwardRef<RootBottomSheet, Props>(function BottomSheet(
     </RootBottomSheet>
   );
 });
+
+type BackdropProps = BottomSheetBackdropProps;
+
+function Backdrop({animatedIndex, style}: BackdropProps) {
+  const containerAnimatedStyle = useAnimatedStyle(() => ({
+    opacity: interpolate(
+      animatedIndex.value,
+      [0, 1],
+      [0, 1],
+      Extrapolate.CLAMP,
+    ),
+  }));
+
+  const containerStyle = useMemo(
+    () => [
+      style,
+      {
+        backgroundColor: '#aeaeae',
+      },
+      containerAnimatedStyle,
+    ],
+    [style, containerAnimatedStyle],
+  );
+
+  return <Animated.View style={containerStyle} />;
+}
 
 const transformOrigin = (
   {x, y}: {x: number; y: number},

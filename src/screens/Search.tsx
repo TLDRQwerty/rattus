@@ -3,7 +3,7 @@ import type {ListRenderItem} from 'react-native';
 import {View} from 'react-native';
 import useDebounce from '../hooks/use-debounce';
 import Text from '../ui/Text';
-import {Search as SearchIcon} from '../ui/Icons';
+import {Search as SearchIcon, X} from '../ui/Icons';
 import Status from '../Status';
 import TextInput from '../ui/TextInput';
 import tw from '../tailwind';
@@ -19,6 +19,7 @@ import type {
 import Loading from '../ui/Loading';
 import Account from '../ui/Account';
 import {FlatList} from 'react-native-gesture-handler';
+import Pressable from '../ui/Pressable';
 
 const getItemCount = (arr: unknown[]) => arr.length;
 const getItem = (arr: any[], index: number): any => arr[index];
@@ -65,9 +66,14 @@ export default function Search(): JSX.Element {
 
   return (
     <View>
-      <View style={tw`flex-row items-center`}>
+      <View style={tw`flex-row items-center border bg-gray-200 rounded justify-between`}>
         <SearchIcon />
         <TextInput style={tw`flex-1`} value={search} onChangeText={setSearch} />
+        {search !== '' && (
+          <Pressable onPress={() => setSearch('')}>
+            <X />
+          </Pressable>
+        )}
       </View>
       <Tabs>
         <Tabs.Tab title={<Text>Accounts</Text>}>

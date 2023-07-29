@@ -1,5 +1,8 @@
 import {registerRootComponent} from 'expo';
 import App from './src/App';
-import './src/wdyr';
+
+if (process.env.NODE_ENV === 'development') {
+  import('./src/wdyr');
+}
 
 registerRootComponent(App);

@@ -213,3 +213,20 @@ export const Logout = createIcon(
     <Path d="M6 15l-3 -3" />
   </>,
 );
+
+export const ArrowLeft = createIcon(
+  <>
+    <Path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <Path d="M5 12l14 0" />
+    <Path d="M5 12l6 6" />
+    <Path d="M5 12l6 -6" />
+  </>,
+);
+
+export const X = createIcon(
+  <>
+    <Path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <Path d="M18 6l-12 12" />
+    <Path d="M6 6l12 12" />
+  </>,
+);

@@ -1,5 +1,6 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {useState} from 'react';
+import type {LayoutChangeEvent} from 'react-native';
 import {View, useWindowDimensions} from 'react-native';
 import RenderHTML from 'react-native-render-html';
 import tw from './tailwind';
@@ -27,7 +28,10 @@ export default function Status({
   visibility,
 }: Props) {
   const navigation = useNavigation();
-  const {width} = useWindowDimensions();
+  const [width, setWidth] = useState(useWindowDimensions().width);
+  const onLayout = (event: LayoutChangeEvent) => {
+    setWidth(event.nativeEvent.layout.width);
+  };
   if (reblog) {
     return (
       <View>
@@ -37,9 +41,11 @@ export default function Status({
           fullUsername={account.acct}
           avatarUri={account.avatar_static}
         />
-        <View style={tw`flex-row`}>
+        <View style={tw`flex-row pr-6`}>
           <CornerDownRight style={tw`text-primary-400`} />
-          <Status {...reblog} />
+          <View onLayout={onLayout}>
+            <Status {...reblog} />
+          </View>
         </View>
       </View>
     );
@@ -67,7 +73,9 @@ export default function Status({
           </Text>
         )}
       </View>
-      <RenderHTML contentWidth={width} source={{html: content}} />
+      <View onLayout={onLayout}>
+        <RenderHTML contentWidth={width} debug source={{html: content}} />
+      </View>
       {media_attachments?.length !== 0
         ? media_attachments?.map(attachment => (
             <Image
