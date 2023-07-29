@@ -1,27 +1,36 @@
-import React, {useMemo} from 'react';
+import React, {useEffect, useRef} from 'react';
 import type {RootNavigationStackScreenProps} from '../navigation';
 import type {ListRenderItem} from 'react-native';
-import {View} from 'react-native';
-import BottomSheet from '../ui/BottomSheet';
 import Text from '../ui/Text';
 import Tabs from '../ui/Tabs';
 import useList from '../hooks/use-list';
 import type {Account as AccountType} from '../types';
 import Account from '../ui/Account';
+import BottomSheet from '../ui/BottomSheet';
 
 export default function FollowingAndFollowers({
   route,
+  navigation,
 }: RootNavigationStackScreenProps<'FollowingAndFollowers'>): JSX.Element {
   const {id} = route.params;
+
+  const onClose = () => {
+    if (navigation.canGoBack()) {
+      navigation.goBack();
+    }
+  };
+
   return (
-    <Tabs>
-      <Tabs.Tab title={<Text>Following</Text>}>
-        <Following id={id} />
-      </Tabs.Tab>
-      <Tabs.Tab title={<Text>Followers</Text>}>
-        <Followers id={id} />
-      </Tabs.Tab>
-    </Tabs>
+    <BottomSheet snapPoints={['50%', '100%']} onClose={onClose}>
+      <Tabs>
+        <Tabs.Tab title={<Text>Following</Text>}>
+          <Following id={id} />
+        </Tabs.Tab>
+        <Tabs.Tab title={<Text>Followers</Text>}>
+          <Followers id={id} />
+        </Tabs.Tab>
+      </Tabs>
+    </BottomSheet>
   );
 }
 

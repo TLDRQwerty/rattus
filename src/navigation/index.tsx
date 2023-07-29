@@ -11,12 +11,13 @@ import Connect from '../screens/Connect';
 import FollowingAndFollowers from '../screens/FollowingAndFollowers';
 import Camera from '../screens/Camera';
 import Settings from '../screens/Settings';
+import Header from '../ui/Header';
 
 const Stack = createNativeStackNavigator<RootNavigationStackParamList>();
 
 export default function RootNavigation(): JSX.Element {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{header: Header}}>
       <Stack.Screen
         options={{headerShown: false}}
         name="RootBottomTab"
@@ -39,6 +40,7 @@ export default function RootNavigation(): JSX.Element {
         <Stack.Screen
           name="FollowingAndFollowers"
           component={FollowingAndFollowers}
+          options={{presentation: 'transparentModal'}}
         />
         <Stack.Screen name="Camera" component={Camera} />
       </Stack.Group>

@@ -11,6 +11,7 @@ import Notifications from '../screens/Notifications';
 import {useUserStore} from '../stores/use-user';
 import Pressable from '../ui/Pressable';
 import {useNavigation} from '@react-navigation/native';
+import Header from '../ui/Header';
 
 const Tab = createBottomTabNavigator<RootBottomTabParamList>();
 
@@ -35,7 +36,11 @@ export default function BottomTabNavigator(): JSX.Element {
 
   return (
     <Tab.Navigator
-      screenOptions={{tabBarShowLabel: false, tabBarHideOnKeyboard: true}}>
+      screenOptions={{
+        tabBarShowLabel: false,
+        tabBarHideOnKeyboard: true,
+        header: Header,
+      }}>
       <Tab.Screen
         options={{tabBarIcon: renderIcon(Icons.Home)}}
         name="Home"

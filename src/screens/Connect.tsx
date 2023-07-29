@@ -39,7 +39,7 @@ export default function LoggingIn({
           };
           setAccessToken(json.access_token);
         }
-        navigation.navigate('RootBottomTab', {screen: 'Public'});
+        navigation.navigate('RootBottomTab', {screen: 'Home'});
       }
     }
   };

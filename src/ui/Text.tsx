@@ -11,18 +11,27 @@ const text = cva('', {
       false: 'text-black',
       true: 'text-gray-600',
     },
+    size: {
+      '2xl': 'text-2xl',
+      xl: 'text-xl',
+      lg: 'text-lg',
+      md: 'text-md',
+      sm: 'text-sm',
+      xs: 'text-xs',
+    },
   },
   defaultVariants: {
     subtext: false,
+    size: 'md',
   },
 });
 
 type Props = TextProps & VariantProps<typeof text>;
 
-export default function Text({subtext, style, ...rest}: Props) {
+export default function Text({subtext, size, style, ...rest}: Props) {
   return (
     <RNText
-      style={StyleSheet.compose(tw.style(text({subtext})), style)}
+      style={StyleSheet.compose(tw.style(text({subtext, size})), style)}
       {...rest}
     />
   );

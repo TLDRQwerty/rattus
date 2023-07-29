@@ -8,6 +8,7 @@ import List from '../ui/List';
 import * as Icons from '../ui/Icons';
 import Text from '../ui/Text';
 import tw from '../tailwind';
+import Header from '../ui/Header';
 
 const list = [
   {id: 1, name: 'Home', endpoint: 'api/v1/timelines/home', icon: Icons.Home},
@@ -36,11 +37,11 @@ export default function Home({
 
   useEffect(() => {
     navigation.setOptions({
-      header: () => (
-        <View style={tw`bg-white`}>
+      header: props => (
+        <Header {...props}>
           <List value={selectedList} onChange={setSelectedList}>
             <List.Button>
-              <Text style={tw`text-xl`}>{selectedList.name}</Text>
+              <Header.Text>{selectedList.name}</Header.Text>
             </List.Button>
             <List.Options>
               {list.map(item => (
@@ -54,13 +55,13 @@ export default function Home({
                         'text-primary-400': item.id === selectedList.id,
                       })}
                     />
-                    <Text style={tw`text-lg`}>{item.name}</Text>
+                    <Text size="lg">{item.name}</Text>
                   </View>
                 </List.Option>
               ))}
             </List.Options>
           </List>
-        </View>
+        </Header>
       ),
     });
   }, [selectedList, navigation]);
