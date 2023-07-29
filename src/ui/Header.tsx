@@ -13,7 +13,7 @@ type Props = {children?: ReactNode} & (
 function Header({route, children, options}: Props): JSX.Element | null {
   const {name} = route;
   const {headerShown} = options
-  if (!headerShown) {
+  if (headerShown === false) {
     return null;
   }
   return <View>{children ?? <Text>{name}</Text>}</View>;
