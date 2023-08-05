@@ -1,7 +1,18 @@
 import type {ReactNode} from 'react';
 import React, {useCallback, useMemo} from 'react';
-import type {ListRenderItem, VirtualizedListProps} from 'react-native';
-import {ActivityIndicator, Text, View, VirtualizedList} from 'react-native';
+import type {
+  ListRenderItem,
+  StyleProp,
+  ViewStyle,
+  VirtualizedListProps,
+} from 'react-native';
+import {
+  StyleSheet,
+  ActivityIndicator,
+  Text,
+  View,
+  VirtualizedList,
+} from 'react-native';
 import {RefreshControl} from 'react-native-gesture-handler';
 import tw from '../tailwind';
 import useInfiniteQuery from './use-infinite-query';
@@ -23,11 +34,13 @@ export default function useList<TType extends {id: string}>({
   renderItem,
   ListFooterComponent,
   enabled,
+  itemStyle,
   ...rest
 }: {
   endpoint: TemplateStringsArray | string;
   data?: RequestInit;
   enabled?: boolean;
+  itemStyle?: StyleProp<ViewStyle>;
 } & VirtualizedListProps<TType>) {
   const {
     data,
@@ -73,7 +86,11 @@ export default function useList<TType extends {id: string}>({
       return <View />;
     }
 
-    return <View style={tw`px-4 py-2`}>{renderItem(item)}</View>;
+    return (
+      <View style={StyleSheet.compose(tw`px-4 py-2`, itemStyle)}>
+        {renderItem(item)}
+      </View>
+    );
   };
 
   let Component = null;
@@ -93,6 +110,11 @@ export default function useList<TType extends {id: string}>({
         getItemCount={getItemCount}
         getItem={getItem}
         initialNumToRender={4}
+        ListEmptyComponent={
+          <View style={tw`items-center mt-4`}>
+            <Text>No items found</Text>
+          </View>
+        }
         refreshControl={
           <RefreshControl refreshing={isRefetching} onRefresh={onRefresh} />
         }

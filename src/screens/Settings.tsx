@@ -16,7 +16,7 @@ export default function Settings({
         Icon={List}
         text="List"
         onPress={() => {
-          navigation.navigate('List');
+          navigation.navigate('Lists');
         }}
       />
       <Row Icon={Logout} text="Logout" onPress={console.log} />
