@@ -12,6 +12,7 @@ import FollowingAndFollowers from '../screens/FollowingAndFollowers';
 import Camera from '../screens/Camera';
 import Settings from '../screens/Settings';
 import Header from '../ui/Header';
+import FavoritedAndBoosted from '../screens/FavoritedAndBoosted';
 
 const Stack = createNativeStackNavigator<RootNavigationStackParamList>();
 
@@ -34,15 +35,18 @@ export default function RootNavigation(): JSX.Element {
       <Stack.Screen name="Settings" component={Settings} />
       <Stack.Group
         screenOptions={{
-          presentation: 'modal',
+          presentation: 'transparentModal',
           headerShown: false,
         }}>
         <Stack.Screen
           name="FollowingAndFollowers"
           component={FollowingAndFollowers}
-          options={{presentation: 'transparentModal'}}
         />
         <Stack.Screen name="Camera" component={Camera} />
+        <Stack.Screen
+          name="FavoritedAndBoosted"
+          component={FavoritedAndBoosted}
+        />
       </Stack.Group>
     </Stack.Navigator>
   );
@@ -57,6 +61,7 @@ type RootNavigationStackParamList = {
   FollowingAndFollowers: {id: string};
   Camera: undefined;
   Settings: undefined;
+  FavoritedAndBoosted: {id: string};
 };
 
 export type RootNavigationStackScreenProps<

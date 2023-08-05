@@ -21,7 +21,7 @@ import {useIsFocused} from '@react-navigation/native';
 import {useAppState} from '../hooks/use-app-state';
 import tw from '../tailwind';
 import Pressable from './Pressable';
-import {CameraBolt, CameraCancel, CameraRotate} from './Icons';
+import {CameraBolt, CameraCancel, CameraRotate, CircleDot} from './Icons';
 
 const ReanimatedCamera = Reanimated.createAnimatedComponent(RootCamera);
 Reanimated.addWhitelistedNativeProps({
@@ -101,6 +101,14 @@ export default function Camera(): JSX.Element {
     onFlipCameraPressed();
   }, [onFlipCameraPressed]);
 
+  const onTakePhotoPressed = useCallback(async () => {
+    if (camera.current) {
+      await camera.current.takePhoto({
+        flash: flash ? 'on' : 'off',
+      });
+    }
+  }, [flash]);
+
   if (device == null) {
     return <Loading />;
   }
@@ -131,7 +139,12 @@ export default function Camera(): JSX.Element {
             {flash ? <CameraBolt /> : <CameraCancel />}
           </Pressable>
         )}
+        <Pressable onPress={onTakePhotoPressed}>
+          <CircleDot />
+        </Pressable>
       </View>
     </View>
   );
 }
+
+function TakePicture() {}

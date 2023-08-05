@@ -12,7 +12,9 @@ import Image from './ui/Image';
 import Pressable from './ui/Pressable';
 import Text from './ui/Text';
 
-type Props = StatusType;
+interface Props extends StatusType {
+  onLongPress?: () => void | Promise<void>;
+}
 
 export default function Status({
   id,
@@ -26,6 +28,7 @@ export default function Status({
   media_attachments,
   favourited,
   visibility,
+  onLongPress,
 }: Props) {
   const navigation = useNavigation();
   const [width, setWidth] = useState(useWindowDimensions().width);
@@ -57,7 +60,8 @@ export default function Status({
         navigation.navigate('Status', {
           id,
         })
-      }>
+      }
+      onLongPress={onLongPress}>
       <View style={tw`w-full justify-between h-8`}>
         <Account
           id={account.id}

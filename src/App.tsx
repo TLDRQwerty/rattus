@@ -19,6 +19,7 @@ import {
 import NetInfo from '@react-native-community/netinfo';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {useFlipper} from '@react-navigation/devtools';
+import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 
 const queryClient = new QueryClient();
 

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {View, type ListRenderItem} from 'react-native';
 import useList from '../hooks/use-list';
 import Status from '../Status';
@@ -9,6 +9,12 @@ import * as Icons from '../ui/Icons';
 import Text from '../ui/Text';
 import tw from '../tailwind';
 import Header from '../ui/Header';
+import ActionSheet from '../ui/ActionSheet';
+import {
+  BottomSheetModalProvider,
+  type BottomSheetModal,
+} from '@gorhom/bottom-sheet';
+import {useNavigation} from '@react-navigation/native';
 
 const list = [
   {id: 1, name: 'Home', endpoint: 'api/v1/timelines/home', icon: Icons.Home},
@@ -32,7 +38,7 @@ export default function Home({
   const [selectedList, setSelectedList] = useState(list[0]);
   const {Component} = useList<StatusType>({
     endpoint: selectedList.endpoint,
-    renderItem: Item,
+    renderItem: item => <Item {...item} />,
   });
 
   useEffect(() => {
@@ -66,9 +72,34 @@ export default function Home({
     });
   }, [selectedList, navigation]);
 
-  return Component;
+  return (
+    <>
+      <BottomSheetModalProvider>{Component}</BottomSheetModalProvider>
+    </>
+  );
 }
 
 const Item: ListRenderItem<StatusType> = ({item}): JSX.Element => {
-  return <Status {...item} />;
+  const ref = useRef<BottomSheetModal>(null);
+  const navigation = useNavigation();
+  return (
+    <>
+      <ActionSheet ref={ref}>
+        <ActionSheet.Item
+          onPress={() => {
+            navigation.navigate('FavoritedAndBoosted', {id: item.id});
+          }}>
+          <Text>Show who favorited and boosted</Text>
+        </ActionSheet.Item>
+      </ActionSheet>
+      <Status
+        onLongPress={() => {
+          if (ref.current) {
+            ref.current.present();
+          }
+        }}
+        {...item}
+      />
+    </>
+  );
 };
