@@ -20,18 +20,19 @@ function Header({
   options,
 }: Props): JSX.Element | null {
   const {name} = route;
-  const {headerShown} = options;
+  const {headerShown, headerRight, headerLeft} = options;
   if (headerShown === false) {
     return null;
   }
   return (
-    <View style={tw`flex-row gap-4 items-center`}>
+    <View style={tw`bg-white flex-row gap-4 items-center w-screen`}>
       {navigation.canGoBack() && (
         <Pressable onPress={navigation.goBack}>
           <ArrowLeft />
         </Pressable>
       )}
-      {children ?? <Text>{name}</Text>}
+      <View style={tw`flex-1`}>{children ?? <Text>{name}</Text>}</View>
+      {headerRight?.()}
     </View>
   );
 }

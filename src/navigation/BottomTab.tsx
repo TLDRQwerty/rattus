@@ -30,7 +30,7 @@ export default function BottomTabNavigator(): JSX.Element {
 
   const settingsNavigation = () => (
     <Pressable onPress={() => navigation.navigate('Settings')}>
-      <Icons.Menu />
+      <Icons.Settings />
     </Pressable>
   );
 

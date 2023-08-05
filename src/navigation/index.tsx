@@ -13,6 +13,7 @@ import Camera from '../screens/Camera';
 import Settings from '../screens/Settings';
 import Header from '../ui/Header';
 import FavoritedAndBoosted from '../screens/FavoritedAndBoosted';
+import List from '../screens/List';
 
 const Stack = createNativeStackNavigator<RootNavigationStackParamList>();
 
@@ -33,6 +34,7 @@ export default function RootNavigation(): JSX.Element {
       />
       <Stack.Screen name="Connect" component={Connect} />
       <Stack.Screen name="Settings" component={Settings} />
+      <Stack.Screen name="List" component={List} />
       <Stack.Group
         screenOptions={{
           presentation: 'transparentModal',
@@ -52,7 +54,7 @@ export default function RootNavigation(): JSX.Element {
   );
 }
 
-type RootNavigationStackParamList = {
+export type RootNavigationStackParamList = {
   RootBottomTab: NavigatorScreenParams<RootBottomTabParamList>;
   Profile: {id: string};
   Status: {id: string};
@@ -62,6 +64,7 @@ type RootNavigationStackParamList = {
   Camera: undefined;
   Settings: undefined;
   FavoritedAndBoosted: {id: string};
+  List: undefined;
 };
 
 export type RootNavigationStackScreenProps<

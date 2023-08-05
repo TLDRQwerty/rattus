@@ -59,7 +59,7 @@ function Options({children}: {children: ReactNode}): JSX.Element | null {
     return null;
   }
   return (
-    <View style={tw`absolute mt-8 bg-white rounded w-full`}>{children}</View>
+    <View style={tw`absolute top-0 bg-white rounded w-full`}>{children}</View>
   );
 }
 
@@ -77,7 +77,7 @@ function Option({
   return (
     <Pressable
       onPress={() => {
-        onChange(value);
+        void onChange(value);
         dispatch({type: ActionTypes.Close});
       }}
       disabled={disabled}

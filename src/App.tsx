@@ -8,7 +8,7 @@ import type {AppStateStatus} from 'react-native';
 import {AppState, Platform} from 'react-native';
 import {useDeviceContext} from 'twrnc';
 import tw from './tailwind';
-import type {RootStackParamList} from './navigation';
+import type {RootNavigationStackParamList} from './navigation';
 import Navigator from './navigation';
 import {
   QueryClient,
@@ -41,7 +41,7 @@ function onAppStateChange(status: AppStateStatus) {
   }
 }
 
-const linking: LinkingOptions<RootStackParamList> = {
+const linking: LinkingOptions<RootNavigationStackParamList> = {
   prefixes: ['rattus://'],
   config: {
     screens: {},
@@ -64,7 +64,9 @@ export default function App() {
       <NavigationContainer linking={linking} ref={navigationRef}>
         <GestureHandlerRootView style={tw`flex-1`}>
           <QueryClientProvider client={queryClient}>
-            <Navigator />
+            <BottomSheetModalProvider>
+              <Navigator />
+            </BottomSheetModalProvider>
           </QueryClientProvider>
         </GestureHandlerRootView>
       </NavigationContainer>

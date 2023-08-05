@@ -38,7 +38,7 @@ export default function Home({
   const [selectedList, setSelectedList] = useState(list[0]);
   const {Component} = useList<StatusType>({
     endpoint: selectedList.endpoint,
-    renderItem: item => <Item {...item} />,
+    renderItem: Item,
   });
 
   useEffect(() => {
@@ -72,34 +72,9 @@ export default function Home({
     });
   }, [selectedList, navigation]);
 
-  return (
-    <>
-      <BottomSheetModalProvider>{Component}</BottomSheetModalProvider>
-    </>
-  );
+  return Component;
 }
 
 const Item: ListRenderItem<StatusType> = ({item}): JSX.Element => {
-  const ref = useRef<BottomSheetModal>(null);
-  const navigation = useNavigation();
-  return (
-    <>
-      <ActionSheet ref={ref}>
-        <ActionSheet.Item
-          onPress={() => {
-            navigation.navigate('FavoritedAndBoosted', {id: item.id});
-          }}>
-          <Text>Show who favorited and boosted</Text>
-        </ActionSheet.Item>
-      </ActionSheet>
-      <Status
-        onLongPress={() => {
-          if (ref.current) {
-            ref.current.present();
-          }
-        }}
-        {...item}
-      />
-    </>
-  );
+  return <Status {...item} />;
 };

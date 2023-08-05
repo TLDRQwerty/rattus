@@ -1,8 +1,8 @@
-import type { ComponentProps, ForwardedRef, ReactNode } from 'react';
-import React, { forwardRef, useCallback, createContext, useContext } from 'react';
-import type { GestureResponderEvent } from 'react-native';
-import { View, Pressable as RootPressable, StyleSheet } from 'react-native';
-import type { BottomSheetBackgroundProps } from '@gorhom/bottom-sheet';
+import type {ComponentProps, ForwardedRef, ReactNode} from 'react';
+import React, {forwardRef, useCallback, createContext, useContext} from 'react';
+import type {GestureResponderEvent} from 'react-native';
+import {View, Pressable as RootPressable, StyleSheet} from 'react-native';
+import type {BottomSheetBackgroundProps} from '@gorhom/bottom-sheet';
 import {
   BottomSheetModal,
   BottomSheetView,
@@ -20,7 +20,7 @@ interface Props {
 const SNAP_POINTS = ['CONTENT_HEIGHT'];
 
 const ActionSheet = forwardRef<RefHandle, Props>(function ActionSheet(
-  { children },
+  {children},
   ref,
 ): JSX.Element {
   const {
@@ -55,7 +55,7 @@ const ActionSheet = forwardRef<RefHandle, Props>(function ActionSheet(
       backgroundComponent={BackgroundComponent}
       handleComponent={null}>
       <BottomSheetView onLayout={handleContentLayout}>
-        <ActionSheetContext.Provider value={{ ref }}>
+        <ActionSheetContext.Provider value={{ref}}>
           {children}
         </ActionSheetContext.Provider>
       </BottomSheetView>
@@ -63,7 +63,7 @@ const ActionSheet = forwardRef<RefHandle, Props>(function ActionSheet(
   );
 });
 
-function BackgroundComponent({ style }: BottomSheetBackgroundProps) {
+function BackgroundComponent({style}: BottomSheetBackgroundProps) {
   return <View style={StyleSheet.compose(tw`bg-white`, style)} />;
 }
 
@@ -97,11 +97,11 @@ const ActionSheetContext = createContext<ActionSheetContext | null>(null);
 
 function useActionSheetContext() {
   const context = useContext(ActionSheetContext);
-  console.log({ context });
+  console.log({context});
   if (!context) {
     throw new Error('useActionSheetContext must be used within an ActionSheet');
   }
   return context;
 }
 
-export default Object.assign(ActionSheet, { Item });
+export default Object.assign(ActionSheet, {Item});

@@ -14,7 +14,7 @@ export default function ProfileInner({profile}: {profile: Account}) {
   const navigation = useNavigation();
   const {width} = useWindowDimensions();
   const {Component} = useList<StatusType>({
-    endpoint: `/api/v1/accounts/${profile.id}/statuses`,
+    endpoint: `api/v1/accounts/${profile.id}/statuses`,
     renderItem: ({item}) => <Status {...item} />,
     ListHeaderComponent: (
       <View>

@@ -254,3 +254,9 @@ export interface Search {
   statuses: Status[];
   hashtags: Tag[];
 }
+
+export interface List {
+  id: string;
+  title: string;
+  replies_policy: 'followed' | 'list' | 'none';
+}

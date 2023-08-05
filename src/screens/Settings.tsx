@@ -4,12 +4,21 @@ import {View} from 'react-native';
 import type {RootNavigationStackScreenProps} from '../navigation';
 import Pressable from '../ui/Pressable';
 import Text from '../ui/Text';
-import {Logout} from '../ui/Icons';
+import {Logout, List} from '../ui/Icons';
 import tw from '../tailwind';
 
-export default function Settings({}: RootNavigationStackScreenProps<'Settings'>): JSX.Element {
+export default function Settings({
+  navigation,
+}: RootNavigationStackScreenProps<'Settings'>): JSX.Element {
   return (
     <View>
+      <Row
+        Icon={List}
+        text="List"
+        onPress={() => {
+          navigation.navigate('List');
+        }}
+      />
       <Row Icon={Logout} text="Logout" onPress={console.log} />
     </View>
   );
@@ -25,7 +34,9 @@ function Row({
   Icon: typeof Logout;
 }): JSX.Element {
   return (
-    <Pressable style={tw`flex-row gap-2 py-2 border-gray-200 bg-white border-b items-center`} onPress={onPress}>
+    <Pressable
+      style={tw`flex-row gap-2 py-2 border-gray-200 bg-white border-b items-center`}
+      onPress={onPress}>
       <Icon />
       <Text>{text}</Text>
     </Pressable>

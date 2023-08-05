@@ -36,6 +36,7 @@ export default function useList<TType extends {id: string}>({
     fetchNextPage,
     isFetchingNextPage,
     refetch,
+    hasNextPage,
     isRefetching,
   } = useInfiniteQuery<TType[]>(
     Array.isArray(endpoint) ? endpoint : [endpoint],
@@ -49,12 +50,12 @@ export default function useList<TType extends {id: string}>({
   const flatData = useMemo(() => data?.pages.flatMap(d => d.data), [data]);
 
   const onEndReached = useCallback(() => {
-    if (status !== 'success' || isFetchingNextPage || fetchNextPage == null) {
+    if (status !== 'success' || isFetchingNextPage || !hasNextPage) {
       return;
     }
 
     void fetchNextPage();
-  }, [fetchNextPage, status, isFetchingNextPage]);
+  }, [hasNextPage, fetchNextPage, status, isFetchingNextPage]);
 
   const onRefresh = useCallback(() => {
     void refetch();
