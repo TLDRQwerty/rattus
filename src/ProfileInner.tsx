@@ -6,7 +6,7 @@ import Image from './ui/Image';
 import Text from './ui/Text';
 import RenderHTML from 'react-native-render-html';
 import useList from './hooks/use-list';
-import Status from './Status';
+import Status from './Status/Status';
 import Pressable from './ui/Pressable';
 import {useNavigation} from '@react-navigation/native';
 

@@ -4,7 +4,7 @@ import {View} from 'react-native';
 import useDebounce from '../hooks/use-debounce';
 import Text from '../ui/Text';
 import {Search as SearchIcon, X} from '../ui/Icons';
-import Status from '../Status';
+import Status from '../Status/Status';
 import TextInput from '../ui/TextInput';
 import tw from '../tailwind';
 import Tabs from '../ui/Tabs';

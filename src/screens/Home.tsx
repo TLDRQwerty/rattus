@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {View, type ListRenderItem} from 'react-native';
 import useList from '../hooks/use-list';
-import Status from '../Status';
+import Status from '../Status/Status';
 import type {Status as StatusType} from '../types';
 import type {RootBottomTabScreenParams} from '../navigation/BottomTab';
 import List from '../ui/List';
@@ -9,12 +9,8 @@ import * as Icons from '../ui/Icons';
 import Text from '../ui/Text';
 import tw from '../tailwind';
 import Header from '../ui/Header';
-import ActionSheet from '../ui/ActionSheet';
-import {
-  BottomSheetModalProvider,
-  type BottomSheetModal,
-} from '@gorhom/bottom-sheet';
-import {useNavigation} from '@react-navigation/native';
+import {useSnackBar} from '../ui/SnackBar';
+import Pressable from '../ui/Pressable';
 
 const list = [
   {id: 1, name: 'Home', endpoint: 'api/v1/timelines/home', icon: Icons.Home},
@@ -72,7 +68,19 @@ export default function Home({
     });
   }, [selectedList, navigation]);
 
-  return Component;
+  const {showSnack} = useSnackBar();
+
+  return (
+    <View>
+      <Pressable
+        onPress={() => {
+          showSnack(<Text style={tw`text-white`}>Foobar</Text>);
+        }}>
+        <Text>press me</Text>
+      </Pressable>
+      {Component}
+    </View>
+  );
 }
 
 const Item: ListRenderItem<StatusType> = ({item}): JSX.Element => {

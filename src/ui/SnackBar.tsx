@@ -55,7 +55,6 @@ function Container({children}: {children: ReactNode}): JSX.Element {
 function Snacks(): JSX.Element | null {
   const {state, dispatch} = useSnackBarContext();
 
-  console.log(state.snacks);
   if (state.snacks.length === 0) {
     return null;
   }

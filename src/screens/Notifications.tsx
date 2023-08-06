@@ -5,7 +5,7 @@ import type {RootBottomTabScreenParams} from '../navigation/BottomTab';
 import useList from '../hooks/use-list';
 import Text from '../ui/Text';
 import type {Notification} from '../types';
-import Status from '../Status';
+import Status from '../Status/Status';
 import Account from '../ui/Account';
 import tw from '../tailwind';
 

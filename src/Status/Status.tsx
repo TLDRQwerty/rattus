@@ -3,16 +3,20 @@ import React, {useRef, useState} from 'react';
 import type {LayoutChangeEvent} from 'react-native';
 import {View, useWindowDimensions, Share} from 'react-native';
 import RenderHTML from 'react-native-render-html';
-import tw from './tailwind';
-import type {Status as StatusType} from './types';
-import {VISIBILITY} from './types';
-import Account from './ui/Account';
-import {CornerDownRight, Heart, MessageCircle, Repeat} from './ui/Icons';
-import Image from './ui/Image';
-import Pressable from './ui/Pressable';
-import Text from './ui/Text';
-import ActionSheet from './ui/ActionSheet';
+import tw from '../tailwind';
+import type {Status as StatusType} from '../types';
+import {VISIBILITY} from '../types';
+import Account from '../ui/Account';
+import {CornerDownRight, Heart, MessageCircle, Repeat} from '../ui/Icons';
+import Image from '../ui/Image';
+import Pressable from '../ui/Pressable';
+import Text from '../ui/Text';
+import ActionSheet from '../ui/ActionSheet';
 import type {BottomSheetModal} from '@gorhom/bottom-sheet';
+import {useMutation} from '@tanstack/react-query';
+import {useUserStore} from '../stores/use-user';
+import {useSnackBar} from '../ui/SnackBar';
+import { queryClient } from '../App';
 
 interface Props extends StatusType {
   onLongPress?: () => void | Promise<void>;
@@ -38,6 +42,37 @@ export default function Status({
   const onLayout = (event: LayoutChangeEvent) => {
     setWidth(event.nativeEvent.layout.width);
   };
+
+  const {showSnack} = useSnackBar();
+
+  const [instance, accessToken] = useUserStore(s => [
+    s.instance,
+    s.accessToken,
+  ]);
+  const headers: Headers = new Headers();
+  headers.set('Authorization', `Bearer ${accessToken}`);
+  const {mutate} = useMutation({
+    mutationKey: [id, 'api/v1/statuses/:id/favourite', instance, accessToken],
+    mutationFn: async () => {
+      await fetch(
+        `https://${instance}/api/v1/statuses/${id}/${
+          favourited ? 'unfavourite' : 'favourite'
+        }`,
+        {
+          method: 'POST',
+          headers,
+        },
+      );
+    },
+    onSuccess: () => {
+      showSnack?.(
+        <Text style={tw`text-white`}>
+          Post {favourited ? 'Unfavourited' : 'Favourited'}
+        </Text>,
+      );
+    },
+  });
+
   const onShare = async () => {
     const result = await Share.share({
       url,
@@ -115,10 +150,10 @@ export default function Status({
             <Repeat style={tw.style(reblogged && 'text-primary-600')} />
             <Text>{reblogs_count}</Text>
           </View>
-          <View style={tw`flex-row items-center`}>
+          <Pressable style={tw`flex-row items-center`} onPress={mutate}>
             <Heart style={tw.style(favourited && 'text-primary-600')} />
             <Text>{favourites_count}</Text>
-          </View>
+          </Pressable>
         </View>
       </Pressable>
       <ActionSheet ref={actionSheetRef}>

@@ -6,7 +6,7 @@ import useAuthQuery from '../hooks/use-auth-query';
 import Loading from '../ui/Loading';
 import Text from '../ui/Text';
 import type {Context as ContextType, Status as StatusType} from '../types';
-import StatusComponent from '../Status';
+import StatusComponent from '../Status/Status';
 import tw from '../tailwind';
 import {RefreshControl} from 'react-native-gesture-handler';
 

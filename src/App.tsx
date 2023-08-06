@@ -22,9 +22,9 @@ import {useFlipper} from '@react-navigation/devtools';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import SnackBar from './ui/SnackBar';
 
-const queryClient = new QueryClient();
+export const queryClient = new QueryClient();
 
-if (__DEV__) {
+if (__DEV__ && true) {
   void import('react-query-native-devtools').then(({addPlugin}) => {
     addPlugin({queryClient});
   });
