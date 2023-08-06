@@ -20,6 +20,7 @@ import NetInfo from '@react-native-community/netinfo';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {useFlipper} from '@react-navigation/devtools';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
+import SnackBar from './ui/SnackBar';
 
 const queryClient = new QueryClient();
 
@@ -65,7 +66,9 @@ export default function App() {
         <GestureHandlerRootView style={tw`flex-1`}>
           <QueryClientProvider client={queryClient}>
             <BottomSheetModalProvider>
-              <Navigator />
+              <SnackBar.Container>
+                <Navigator />
+              </SnackBar.Container>
             </BottomSheetModalProvider>
           </QueryClientProvider>
         </GestureHandlerRootView>
