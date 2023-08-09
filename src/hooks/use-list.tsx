@@ -17,6 +17,7 @@ import {RefreshControl} from 'react-native-gesture-handler';
 import tw from '../tailwind';
 import useInfiniteQuery from './use-infinite-query';
 import Loading from '../ui/Loading';
+import {useUserStore} from '../stores/use-user';
 
 const getItemCount = (arr: unknown[]) => arr.length;
 const getItem = (arr: any[], index: number): any => arr[index];
@@ -41,7 +42,7 @@ export default function useList<TType extends {id: string}>({
   data?: RequestInit;
   enabled?: boolean;
   itemStyle?: StyleProp<ViewStyle>;
-} & VirtualizedListProps<TType>) {
+} & VirtualizedListProps<TType & {queryKey: string[]}>) {
   const {
     data,
     status,
@@ -81,11 +82,20 @@ export default function useList<TType extends {id: string}>({
     return null;
   }, [isFetchingNextPage]);
 
-  const renderItemWrapper: ListRenderItem<TType> = item => {
+  const [instance, accessToken] = useUserStore(s => [
+    s.instance,
+    s.accessToken,
+  ]);
+
+  const renderItemWrapper: ListRenderItem<
+    TType & {queryKey: string}
+  > = item => {
     if (!renderItem) {
       return <View />;
     }
 
+    const queryKey = Array.isArray(endpoint) ? endpoint : [endpoint];
+    item.item.queryKey = queryKey.concat([instance, accessToken!]);
     return (
       <View style={StyleSheet.compose(tw`px-4 py-2`, itemStyle)}>
         {renderItem(item)}

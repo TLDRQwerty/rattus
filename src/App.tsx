@@ -24,7 +24,7 @@ import SnackBar from './ui/SnackBar';
 
 export const queryClient = new QueryClient();
 
-if (__DEV__ && true) {
+if (__DEV__ && false) {
   void import('react-query-native-devtools').then(({addPlugin}) => {
     addPlugin({queryClient});
   });

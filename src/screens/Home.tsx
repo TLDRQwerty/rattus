@@ -11,6 +11,8 @@ import tw from '../tailwind';
 import Header from '../ui/Header';
 import {useSnackBar} from '../ui/SnackBar';
 import Pressable from '../ui/Pressable';
+import {on} from 'events';
+import {queryClient} from '../App';
 
 const list = [
   {id: 1, name: 'Home', endpoint: 'api/v1/timelines/home', icon: Icons.Home},
@@ -83,6 +85,8 @@ export default function Home({
   );
 }
 
-const Item: ListRenderItem<StatusType> = ({item}): JSX.Element => {
+const Item: ListRenderItem<StatusType & {queryKey: string[]}> = ({
+  item,
+}): JSX.Element => {
   return <Status {...item} />;
 };

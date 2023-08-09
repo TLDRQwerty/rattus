@@ -1,5 +1,5 @@
 import {useNavigation} from '@react-navigation/native';
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import type {LayoutChangeEvent} from 'react-native';
 import {View, useWindowDimensions, Share} from 'react-native';
 import RenderHTML from 'react-native-render-html';
@@ -16,13 +16,16 @@ import type {BottomSheetModal} from '@gorhom/bottom-sheet';
 import {useMutation} from '@tanstack/react-query';
 import {useUserStore} from '../stores/use-user';
 import {useSnackBar} from '../ui/SnackBar';
-import { queryClient } from '../App';
+import {queryClient} from '../App';
+import type {PaginatedResponse} from '../hooks/use-infinite-query';
 
 interface Props extends StatusType {
   onLongPress?: () => void | Promise<void>;
+  queryKey: string[];
 }
 
 export default function Status({
+  queryKey,
   id,
   content,
   reblogs_count,
@@ -54,7 +57,7 @@ export default function Status({
   const {mutate} = useMutation({
     mutationKey: [id, 'api/v1/statuses/:id/favourite', instance, accessToken],
     mutationFn: async () => {
-      await fetch(
+      const response = await fetch(
         `https://${instance}/api/v1/statuses/${id}/${
           favourited ? 'unfavourite' : 'favourite'
         }`,
@@ -63,12 +66,40 @@ export default function Status({
           headers,
         },
       );
+      if (response.ok) {
+        return await response.json();
+      } else {
+        throw new Error(response.statusText);
+      }
     },
-    onSuccess: () => {
+    onSuccess: (status: StatusType) => {
       showSnack?.(
         <Text style={tw`text-white`}>
           Post {favourited ? 'Unfavourited' : 'Favourited'}
         </Text>,
+      );
+
+      queryClient.setQueryData<PaginatedResponse<StatusType>>(
+        queryKey,
+        oldData => {
+          const dataClone = JSON.parse(
+            JSON.stringify(oldData),
+          ) as PaginatedResponse<StatusType>;
+          if (oldData) {
+            dataClone.pages = oldData.pages.map(page => {
+              page.data = page.data.map(result => {
+                if (result.id === status.id) {
+                  result = status;
+                }
+                return result;
+              });
+              return page;
+            });
+
+            return dataClone;
+          }
+          return oldData;
+        },
       );
     },
   });

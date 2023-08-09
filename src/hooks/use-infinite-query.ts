@@ -6,6 +6,14 @@ import type {
 import {useInfiniteQuery as useInfiniteQueryBase} from '@tanstack/react-query';
 import {useUserStore} from '../stores/use-user';
 
+export interface PaginatedResponse<TData> {
+  pages: {
+    data: TData[];
+    nextPage: string | undefined;
+    rpevPage: string | undefined;
+  }[];
+}
+
 interface LinkHeader {
   url: string;
   rel: string;
@@ -135,7 +143,7 @@ export default function useInfiniteQuery<
       };
     },
     getNextPageParam: lastPage => {
-      return lastPage?.nextPage;
+      return lastPage?.nextPage ?? undefined;
     },
     ...options,
   });
