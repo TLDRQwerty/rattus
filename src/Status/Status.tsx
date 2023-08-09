@@ -55,7 +55,7 @@ export default function Status({
   ]);
   const headers: Headers = new Headers();
   headers.set('Authorization', `Bearer ${accessToken}`);
-  const {mutate} = useMutation({
+  const {mutate: mutateFavourite} = useMutation({
     mutationKey: [id, 'api/v1/statuses/:id/favourite', instance, accessToken],
     mutationFn: async () => {
       const response = await fetch(
@@ -87,6 +87,38 @@ export default function Status({
     },
   });
 
+  const {mutate: mutateReblog} = useMutation({
+    mutationKey: [id, 'api/v1/statuses/:id/reblog', instance, accessToken],
+    mutationFn: async () => {
+      const response = await fetch(
+        `https://${instance}/api/v1/statuses/${id}/${
+          reblog ? 'unreblog' : 'reblog'
+        }`,
+        {
+          method: 'POST',
+          headers,
+        },
+      );
+      if (response.ok) {
+        return await response.json();
+      } else {
+        throw new Error(response.statusText);
+      }
+    },
+    onSuccess: (status: StatusType) => {
+      showSnack?.(
+        <Text style={tw`text-white`}>
+          Post {reblog ? 'Unblogged' : 'Reblogged'}
+        </Text>,
+      );
+
+      queryClient.setQueryData<PaginatedResponse<StatusType>>(
+        queryKey,
+        oldData => updateItem(oldData, status),
+      );
+    },
+  });
+
   const onShare = async () => {
     const result = await Share.share({
       url,
@@ -103,7 +135,7 @@ export default function Status({
         />
         <View style={tw`flex-row pr-6`}>
           <CornerDownRight style={tw`text-primary-400`} />
-          <View onLayout={onLayout}>
+          <View onLayout={onLayout} style={tw`w-full`}>
             <Status {...reblog} />
           </View>
         </View>
@@ -113,7 +145,7 @@ export default function Status({
   return (
     <>
       <Pressable
-        style={tw`px-2`}
+        style={tw`px-2 w-full`}
         onPress={() =>
           navigation.navigate('Status', {
             id,
@@ -160,11 +192,13 @@ export default function Status({
             <MessageCircle />
             <Text>{replies_count}</Text>
           </View>
-          <View style={tw`flex-row items-center`}>
+          <Pressable onPress={mutateReblog} style={tw`flex-row items-center`}>
             <Repeat style={tw.style(reblogged && 'text-primary-600')} />
             <Text>{reblogs_count}</Text>
-          </View>
-          <Pressable style={tw`flex-row items-center`} onPress={mutate}>
+          </Pressable>
+          <Pressable
+            style={tw`flex-row items-center`}
+            onPress={mutateFavourite}>
             <Heart style={tw.style(favourited && 'text-primary-600')} />
             <Text>{favourites_count}</Text>
           </Pressable>
