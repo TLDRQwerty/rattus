@@ -18,6 +18,7 @@ import {useUserStore} from '../stores/use-user';
 import {useSnackBar} from '../ui/SnackBar';
 import {queryClient} from '../App';
 import type {PaginatedResponse} from '../hooks/use-infinite-query';
+import {updateItem} from '../utils/query';
 
 interface Props extends StatusType {
   onLongPress?: () => void | Promise<void>;
@@ -81,25 +82,7 @@ export default function Status({
 
       queryClient.setQueryData<PaginatedResponse<StatusType>>(
         queryKey,
-        oldData => {
-          const dataClone = JSON.parse(
-            JSON.stringify(oldData),
-          ) as PaginatedResponse<StatusType>;
-          if (oldData) {
-            dataClone.pages = oldData.pages.map(page => {
-              page.data = page.data.map(result => {
-                if (result.id === status.id) {
-                  result = status;
-                }
-                return result;
-              });
-              return page;
-            });
-
-            return dataClone;
-          }
-          return oldData;
-        },
+        oldData => updateItem(oldData, status),
       );
     },
   });
