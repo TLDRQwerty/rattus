@@ -27,6 +27,7 @@
     "class-variance-authority": "^0.4.0",
     "expo": "^49.0.3",
     "expo-image-picker": "~14.3.1",
+    "immer": "^10.0.2",
     "jsc-android": "^250231.0.0",
     "parse-link-header": "^2.0.0",
     "react": "18.2.0",

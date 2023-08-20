@@ -2,7 +2,6 @@ import {useNavigation} from '@react-navigation/native';
 import React, {useEffect, useRef, useState} from 'react';
 import type {LayoutChangeEvent} from 'react-native';
 import {View, useWindowDimensions, Share} from 'react-native';
-import RenderHTML from 'react-native-render-html';
 import tw from '../tailwind';
 import type {Status as StatusType} from '../types';
 import {VISIBILITY} from '../types';
@@ -19,6 +18,7 @@ import {useSnackBar} from '../ui/SnackBar';
 import {queryClient} from '../App';
 import type {PaginatedResponse} from '../hooks/use-infinite-query';
 import {updateItem} from '../utils/query';
+import RenderHTML from '../ui/RenderHTML';
 
 interface Props extends StatusType {
   onLongPress?: () => void | Promise<void>;

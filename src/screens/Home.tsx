@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, type ListRenderItem} from 'react-native';
 import useList from '../hooks/use-list';
 import Status from '../Status/Status';
@@ -9,10 +9,6 @@ import * as Icons from '../ui/Icons';
 import Text from '../ui/Text';
 import tw from '../tailwind';
 import Header from '../ui/Header';
-import {useSnackBar} from '../ui/SnackBar';
-import Pressable from '../ui/Pressable';
-import {on} from 'events';
-import {queryClient} from '../App';
 
 const list = [
   {id: 1, name: 'Home', endpoint: 'api/v1/timelines/home', icon: Icons.Home},
@@ -70,19 +66,7 @@ export default function Home({
     });
   }, [selectedList, navigation]);
 
-  const {showSnack} = useSnackBar();
-
-  return (
-    <View>
-      <Pressable
-        onPress={() => {
-          showSnack(<Text style={tw`text-white`}>Foobar</Text>);
-        }}>
-        <Text>press me</Text>
-      </Pressable>
-      {Component}
-    </View>
-  );
+  return Component;
 }
 
 const Item: ListRenderItem<StatusType & {queryKey: string[]}> = ({

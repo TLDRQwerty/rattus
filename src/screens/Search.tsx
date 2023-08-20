@@ -21,10 +21,6 @@ import Account from '../ui/Account';
 import {FlatList} from 'react-native-gesture-handler';
 import Pressable from '../ui/Pressable';
 
-const getItemCount = (arr: unknown[]) => arr.length;
-const getItem = (arr: any[], index: number): any => arr[index];
-const keyExtractor = (obj: {id: string}) => obj.id;
-
 export default function Search(): JSX.Element {
   const [accessToken, instance] = useUserStore(s => [
     s.accessToken,
@@ -66,7 +62,8 @@ export default function Search(): JSX.Element {
 
   return (
     <View>
-      <View style={tw`flex-row items-center border bg-gray-200 rounded justify-between`}>
+      <View
+        style={tw`flex-row items-center border bg-gray-200 rounded justify-between`}>
         <SearchIcon />
         <TextInput style={tw`flex-1`} value={search} onChangeText={setSearch} />
         {search !== '' && (

@@ -58,6 +58,9 @@ dependencies:
   expo-image-picker:
     specifier: ~14.3.1
     version: 14.3.1(expo@49.0.3)
+  immer:
+    specifier: ^10.0.2
+    version: 10.0.2
   jsc-android:
     specifier: ^250231.0.0
     version: 250231.0.0
@@ -111,7 +114,7 @@ dependencies:
     version: 3.6.0(postcss@8.4.21)(react-native@0.72.3)
   zustand:
     specifier: ^4.3.6
-    version: 4.3.6(react@18.2.0)
+    version: 4.3.6(immer@10.0.2)(react@18.2.0)
 
 devDependencies:
   '@babel/core':
@@ -5779,6 +5782,10 @@ packages:
     dependencies:
       queue: 6.0.2
 
+  /immer@10.0.2:
+    resolution: {integrity: sha512-Rx3CqeqQ19sxUtYV9CU911Vhy8/721wRFnJv3REVGWUmoAcIwzifTsdmJte/MV+0/XpM35LZdQMBGkRIoLPwQA==}
+    dev: false
+
   /import-fresh@2.0.0:
     resolution: {integrity: sha512-eZ5H8rcgYazHbKC3PG4ClHNykCSxtAhxSSEM+2mb+7evD2CKF5V7c0dNum7AdpDh0ZdICwZY9sRSn8f+KH96sg==}
     engines: {node: '>=4'}
@@ -10209,7 +10216,7 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
 
-  /zustand@4.3.6(react@18.2.0):
+  /zustand@4.3.6(immer@10.0.2)(react@18.2.0):
     resolution: {integrity: sha512-6J5zDxjxLE+yukC2XZWf/IyWVKnXT9b9HUv09VJ/bwGCpKNcaTqp7Ws28Xr8jnbvnZcdRaidztAPsXFBIqufiw==}
     engines: {node: '>=12.7.0'}
     peerDependencies:
@@ -10221,6 +10228,7 @@ packages:
       react:
         optional: true
     dependencies:
+      immer: 10.0.2
       react: 18.2.0
       use-sync-external-store: 1.2.0(react@18.2.0)
     dev: false

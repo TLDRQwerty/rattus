@@ -4,11 +4,11 @@ import type {Account, Status as StatusType} from './types';
 import tw from './tailwind';
 import Image from './ui/Image';
 import Text from './ui/Text';
-import RenderHTML from 'react-native-render-html';
 import useList from './hooks/use-list';
 import Status from './Status/Status';
 import Pressable from './ui/Pressable';
 import {useNavigation} from '@react-navigation/native';
+import RenderHTML from './ui/RenderHTML';
 
 export default function ProfileInner({profile}: {profile: Account}) {
   const navigation = useNavigation();
@@ -17,7 +17,7 @@ export default function ProfileInner({profile}: {profile: Account}) {
     endpoint: `api/v1/accounts/${profile.id}/statuses`,
     renderItem: ({item}) => <Status {...item} />,
     ListHeaderComponent: (
-      <View>
+      <View style={tw`bg-backgroundSecondary`}>
         <View style={tw`w-full h-32 relative`}>
           <View style={tw`absolute w-full`}>
             {profile.header &&
@@ -55,7 +55,7 @@ export default function ProfileInner({profile}: {profile: Account}) {
           {profile.fields.length !== 0 ? (
             <View>
               {profile.fields.map(field => (
-                <View key={field.name} style={tw`flex-row gap-4`}>
+                <View key={field.name} style={tw`flex-row gap-4 flex-wrap`}>
                   <Text style={tw`capitalize`}>{field.name}</Text>
                   <RenderHTML
                     contentWidth={width}
