@@ -13,7 +13,7 @@ import Camera from '../screens/Camera';
 import Settings from '../screens/Settings';
 import Header from '../ui/Header';
 import FavoritedAndBoosted from '../screens/FavoritedAndBoosted';
-import Lists, { ListItem } from '../screens/Lists';
+import Lists, {ListItem} from '../screens/Lists';
 
 const Stack = createNativeStackNavigator<RootNavigationStackParamList>();
 
@@ -49,7 +49,7 @@ export default function RootNavigation(): JSX.Element {
           name="FavoritedAndBoosted"
           component={FavoritedAndBoosted}
         />
-        <Stack.Screen name="ListItem" component={ListItem}/>
+        <Stack.Screen name="ListItem" component={ListItem} />
       </Stack.Group>
     </Stack.Navigator>
   );

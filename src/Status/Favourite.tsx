@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import tw from '../tailwind';
 import {Heart} from '../ui/Icons';
 import Pressable from '../ui/Pressable';

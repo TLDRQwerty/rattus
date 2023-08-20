@@ -23,7 +23,7 @@ export default function List({
       </Pressable>
     ),
     endpoint: 'api/v1/lists',
-    itemStyle: tw`flex-row gap-2 py-2 border-gray-200 bg-white border-b items-center`
+    itemStyle: tw`flex-row gap-2 py-2 border-gray-200 bg-white border-b items-center`,
   });
 
   return Component;
