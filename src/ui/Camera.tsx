@@ -1,5 +1,6 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
+import type {PhotoFile} from 'react-native-vision-camera';
 import {
   Camera as RootCamera,
   useCameraDevices,
@@ -31,7 +32,11 @@ Reanimated.addWhitelistedNativeProps({
 const SCALE_FULL_ZOOM = 3;
 const MAX_ZOOM_FACTOR = 20;
 
-export default function Camera(): JSX.Element {
+interface Props {
+  onPhotoTaken: (photo: PhotoFile) => void | Promise<void>;
+}
+
+export default function Camera({onPhotoTaken}: Props): JSX.Element {
   const camera = useRef<RootCamera>(null);
   const [cameraPosition, setCameraPosition] = useState<'front' | 'back'>(
     'back',
@@ -103,11 +108,14 @@ export default function Camera(): JSX.Element {
 
   const onTakePhotoPressed = useCallback(async () => {
     if (camera.current) {
-      await camera.current.takePhoto({
+      const photo = await camera.current.takePhoto({
         flash: flash ? 'on' : 'off',
       });
+      if (photo) {
+        void onPhotoTaken(photo);
+      }
     }
-  }, [flash]);
+  }, [flash, onPhotoTaken]);
 
   if (device == null) {
     return <Loading />;
@@ -125,12 +133,13 @@ export default function Camera(): JSX.Element {
               isActive={true}
               enableZoomGesture={false}
               animatedProps={cameraAnimatedProps}
+              photo
             />
           </TapGestureHandler>
         </Reanimated.View>
       </PinchGestureHandler>
 
-      <View style={tw`bottom-0 absolute flex-row`}>
+      <View style={tw`bottom-0 absolute flex-row w-screen`}>
         <Pressable onPress={onFlipCameraPressed}>
           <CameraRotate style={tw`w-12 h-12`} />
         </Pressable>
@@ -140,11 +149,9 @@ export default function Camera(): JSX.Element {
           </Pressable>
         )}
         <Pressable onPress={onTakePhotoPressed}>
-          <CircleDot />
+          <CircleDot style={tw`w-12 h-12`} />
         </Pressable>
       </View>
     </View>
   );
 }
-
-function TakePicture() {}

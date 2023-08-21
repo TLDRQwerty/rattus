@@ -27,9 +27,12 @@ export default function Image({disableModal, children, ...rest}: Props) {
       RNImage.getSize(rest.source, (width, height) => setSize({width, height}));
     }
   }, [rest.source]);
+  if (disableModal) {
+    return <RNImage {...rest} />;
+  }
   return (
     <>
-      <Pressable onPress={disableModal ? undefined : () => setOpen(true)}>
+      <Pressable onPress={() => setOpen(true)}>
         <RNImage {...rest} />
       </Pressable>
       <Modal
